@@ -1,7 +1,9 @@
 import pg from 'pg'
 import env_vars from '../config/environment_variables.js'
+import db from './db.js'
 
 const createNewDB = async () => {
+    let createdNewDB = false
     try {
 
         const client = new pg.Client(`postgres://${env_vars.DATABASE_USER}:${env_vars.DATABASE_PASSWORD}@${env_vars.DATABASE_HOST}/postgres`)
@@ -12,15 +14,21 @@ const createNewDB = async () => {
 
         if (!result.rows[0].exists) {
             await client.query(`CREATE DATABASE ${env_vars.DATABASE_NAME}`)
+            createdNewDB = true
         }
 
     } catch (error) {
         console.log(error)
     }
+    return createdNewDB
 }
 
 const seeder = async () => {
-    await createNewDB()
+    const createdNewDB = await createNewDB()
+    if (createdNewDB) {
+        await db.sync()
+            .catch(error => console.log(error))
+    }
 }
 
 export default seeder
