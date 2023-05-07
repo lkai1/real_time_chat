@@ -2,12 +2,14 @@ import express from "express"
 import env_vars from "./config/environment_variables.js"
 import seeder from "./database/seeder.js"
 import authRouter from "./routes/auth.js"
+import userRouter from "./routes/user.js"
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/api/auth", authRouter)
+app.use("/api/user", userRouter)
 
 const startApp = async () => {
     await seeder()
