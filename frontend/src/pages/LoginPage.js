@@ -14,7 +14,7 @@ const LoginPage = () => {
         const result = await login(loginCreds)
         setLoginCreds(emptyLoginCreds)
         result.success ?
-            navigate("/login") :
+            navigate("/main") :
             setNotification(result.message)
     }
 
