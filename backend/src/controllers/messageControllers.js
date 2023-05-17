@@ -31,9 +31,9 @@ export const createMessageController = async (request, response) => {
 export const getChatMessagesController = async (request, response) => {
     try {
 
-        if (!validateGetChatMessagesParams(request.body)) return response.status(400).send("Invalid parameters!")
+        if (!validateGetChatMessagesParams(request.query)) return response.status(400).send("Invalid parameters!")
 
-        const { chatId } = request.body
+        const { chatId } = request.query
         const token = request.headers.authorization
         const user = await getUserFromJWTService(token)
         const chat = await getChatFromIdService(chatId)
