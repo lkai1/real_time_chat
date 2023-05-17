@@ -1,16 +1,14 @@
 import jwt from "jsonwebtoken"
-import User from "../database/models/User.js"
+import env_vars from "../config/environment_variables.js"
 
-export const getUserInfoFromJWT = async (request, response) => {
+export const verifyJWTMiddleware = async (request, response, next) => {
     try {
-
         const token = request.headers.authorization
         if (!token) return response.status(401).send("Access denied!")
 
         try {
-            const decodedJWT = jwt.decode(token)
-            const user = await User.findOne({ where: { id: decodedJWT.id } })
-            response.status(200).json({ username: user.username })
+            jwt.verify(token, env_vars.TOKEN_SECRET)
+            next()
         } catch (e) {
             response.status(400).send("Invalid token!")
         }

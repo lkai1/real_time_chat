@@ -1,15 +1,26 @@
 import express from "express"
 import env_vars from "./config/environment_variables.js"
 import seeder from "./database/seeder.js"
-import authRouter from "./routes/auth.js"
-import userRouter from "./routes/user.js"
+import authRouter from "./routers/authRouter.js"
+import userRouter from "./routers/userRouter.js"
+import messageRouter from "./routers/messageRouter.js"
+import chatRouter from "./routers/chatRouter.js"
 
 const app = express()
 
-app.use(express.json())
+app.use((request, response, next) => {
+    express.json()(request, response, error => {
+        if (error) {
+            return response.status(400).send("Malformed content!")
+        }
+        next();
+    });
+});
 app.use(express.urlencoded({ extended: true }))
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
+app.use("/api/message", messageRouter)
+app.use("/api/chat", chatRouter)
 
 const startApp = async () => {
     await seeder()

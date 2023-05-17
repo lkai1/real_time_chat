@@ -1,19 +1,18 @@
 import { DataTypes } from "sequelize"
 
-const User = (sequelize) => {
-    return sequelize.define("User", {
+const Message = (sequelize) => {
+    return sequelize.define("Message", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             unique: true,
             primaryKey: true
         },
-        username: {
-            type: DataTypes.STRING,
-            unique: true,
+        value: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
-        hash: {
+        timestamp: {
             type: DataTypes.STRING,
             allowNull: false
         }
@@ -22,4 +21,4 @@ const User = (sequelize) => {
     })
 }
 
-export default User
+export default Message

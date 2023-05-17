@@ -1,20 +1,19 @@
 import { DataTypes } from "sequelize"
 
-const User = (sequelize) => {
-    return sequelize.define("User", {
+const Chat = (sequelize) => {
+    return sequelize.define("Chat", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             unique: true,
             primaryKey: true
         },
-        username: {
+        chatName: {
             type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
+            allowNull: true
         },
-        hash: {
-            type: DataTypes.STRING,
+        isGroup: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         }
     }, {
@@ -22,4 +21,4 @@ const User = (sequelize) => {
     })
 }
 
-export default User
+export default Chat

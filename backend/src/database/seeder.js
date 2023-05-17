@@ -26,7 +26,7 @@ const createNewDB = async () => {
 const seeder = async () => {
     const createdNewDB = await createNewDB()
     if (createdNewDB) {
-        await db.sync()
+        await db.sequelize.sync()
             .catch(error => console.log(error))
     }
 }
