@@ -10,5 +10,12 @@ export const createMessageService = async (creatorId, chatId, value) => {
 }
 
 export const getMessagesFromChatService = async (chat) => {
-    return await chat.getChatMessages()
+    return await chat.getChatMessages({
+        attributes: ["id", "value", "timestamp", "chatId"],
+        include: {
+            model: db.users,
+            as: "messageCreator",
+            attributes: ["id", "username"]
+        }
+    })
 }
