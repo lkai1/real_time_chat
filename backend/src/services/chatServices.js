@@ -20,26 +20,19 @@ export const getPrivateChatBetweenUsersService = async (userId, userId2) => {
     return await db.chats.findOne({
         include: {
             model: db.chatParticipants,
-            where: {
-                [Op.or]: [
-                    {
-                        userId: userId
-                    },
-                    {
-                        userId: userId2
-                    }
-                ]
-            }
+            as: "ChatParticipants",
+            duplicating: false,
         },
         where: {
+            isGroup: false,
             [Op.or]: [
                 {
                     creatorId: userId,
-                    isGroup: false,
+                    "$ChatParticipants.userId$": userId2
                 },
                 {
                     creatorId: userId2,
-                    isGroup: false,
+                    "$ChatParticipants.userId$": userId
                 }
             ]
         }
