@@ -1,17 +1,17 @@
 import { validateCreatePrivateChatParams, validateCreateGroupChatParams } from "../utils/validation/chatValidation.js"
 import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExists } from "../services/chatServices.js"
-import { getUserFromJWTService, getUserFromIdService } from "../services/userServices.js"
+import { getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
 
 export const createPrivateChatController = async (request, response) => {
     try {
 
         if (!validateCreatePrivateChatParams(request.body)) return response.status(400).send("Invalid parameters!")
 
-        const { participantId } = request.body
+        const { participantUsername } = request.body
         const token = request.headers.authorization
 
         const user = await getUserFromJWTService(token)
-        const participant = await getUserFromIdService(participantId)
+        const participant = await getUserFromUsernameService(participantUsername)
 
         if (!user || !participant) return response.status(404).send("User or users not found.")
 

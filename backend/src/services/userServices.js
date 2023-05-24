@@ -6,8 +6,8 @@ export const getUserFromJWTService = async (token) => {
     return await db.users.findOne({ where: { id: decodedJWT.id }, attributes: ["id", "username"] })
 }
 
-export const getUserFromIdService = async (userId) => {
-    return await db.users.findOne({ where: { id: userId }, attributes: ["id", "username"] })
+export const getUserFromUsernameService = async (username) => {
+    return await db.users.findOne({ where: { username }, attributes: ["id", "username"] })
 }
 
 export const createUserService = async (username, hash) => {
