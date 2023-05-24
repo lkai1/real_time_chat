@@ -4,8 +4,8 @@ export const validateCreatePrivateChatParams = (params) => {
         params
         && typeof params === "object"
         && Object.keys(params).length === 1
-        && typeof params.participantId === "string"
-        && params.participantId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)
+        && typeof params.participantUsername === "string"
+        && params.participantUsername.length > 2 && params.participantUsername.length < 31
     ) ? true : false
 }
 
