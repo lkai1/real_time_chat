@@ -6,6 +6,7 @@ export const getUserInfoService = async () => {
         headers: {
             Authorization: getAuthToken()
         }
-    })
+    }).catch((_error) => { return })
+
     return response.data
 }
