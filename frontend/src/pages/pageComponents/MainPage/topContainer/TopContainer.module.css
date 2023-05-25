@@ -1,0 +1,25 @@
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.05);
+    height: 50px;
+    padding: 20px;
+}
+
+.logoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoText {
+    margin: 0px;
+    font-family: "Quicksand";
+    font-weight: bold;
+    font-size: 32px;
+    color: rgb(60, 60, 60);
+}
