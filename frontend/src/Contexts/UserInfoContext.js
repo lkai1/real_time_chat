@@ -20,7 +20,7 @@ const UserInfoProvider = ({ children }) => {
     const valuesToProvide = useMemo(
         () => ({
             userInfoState,
-            loading
+            userInfoLoading: loading
         }),
         [userInfoState, loading],
     );
