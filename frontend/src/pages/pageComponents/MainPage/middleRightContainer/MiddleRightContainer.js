@@ -8,21 +8,25 @@ const MiddleRightContainer = () => {
 
     const [message, setMessage] = useState("")
     const { selectedChatState } = useContext(SelectedChatContext)
+    const [notification, setNotification] = useState("")
 
     const handleFormSubmit = async (event, chatId, message, setMessage) => {
         event.preventDefault()
-        await createMessageService(chatId, message)
+        const result = await createMessageService(chatId, message)
+
+        if (!result.success) setNotification(result.message)
+
         setMessage("")
     }
 
     return (
-        <div className={styles.mainContainer}>
+        <div className={notification ? styles.mainContainerWithNotificationShown : styles.mainContainer}>
             <MessageList />
+            <p className={notification ? styles.notificationShown : styles.notification}>{notification}</p>
             {selectedChatState &&
                 <form
                     onSubmit={(event) => {
                         handleFormSubmit(event, selectedChatState, message, setMessage)
-
                     }}
                 >
                     <div className={styles.createMessageFormContentContainer}>

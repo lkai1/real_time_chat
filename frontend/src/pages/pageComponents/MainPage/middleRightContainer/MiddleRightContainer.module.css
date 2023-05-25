@@ -3,6 +3,12 @@
     margin-left: 10px;
 }
 
+.mainContainerWithNotificationShown {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin-left: 10px;
+}
+
 .createMessageFormContentContainer {
     display: flex;
     flex-direction: row;
@@ -12,6 +18,20 @@
     overflow: hidden;
     width: 100%;
     margin-top: 10px;
+}
+
+.notification {
+    display: none;
+}
+
+.notificationShown {
+    color: rgb(255, 50, 50);
+    font-family: 'Quicksand';
+    padding-top: 10px;
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    height: 20px;
 }
 
 .messageInput {
