@@ -63,6 +63,6 @@ export const createGroupChatService = async (chatName) => {
         result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
     }
 
-    return response.status
+    return result
 }
 
