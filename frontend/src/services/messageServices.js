@@ -1,3 +1,4 @@
+import { validateChatId, validateMessage } from "../lib/validation/messageValidation"
 import { getAuthToken } from "../utils/authToken"
 import axios from "axios"
 
@@ -17,7 +18,17 @@ export const getChatMessagesService = async (chatId) => {
 
 export const createMessageService = async (chatId, message) => {
 
-    await axios.post("/api/message",
+    const result = { success: false, message: "" }
+
+    if (!message) return
+
+    if (!validateChatId(chatId) ||
+        !validateMessage(message)) {
+        result.message = "Viestin lähetyksessä esiintyi virhe."
+        return result
+    }
+
+    const response = await axios.post("/api/message",
         {
             message,
             chatId
@@ -25,5 +36,12 @@ export const createMessageService = async (chatId, message) => {
         {
             headers: { Authorization: getAuthToken() }
         }
-    ).catch((_error) => { return })
+    ).catch((error) => {
+        result.message = "Viestin lähetyksessä esiintyi virhe."
+        return error.response
+    })
+
+    if (response.status === 201) result.success = true
+
+    return result
 }
