@@ -1,5 +1,5 @@
-import { validateCreatePrivateChatParams, validateCreateGroupChatParams } from "../utils/validation/chatValidation.js"
-import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExists } from "../services/chatServices.js"
+import { validateCreatePrivateChatParams, validateCreateGroupChatParams, validateAddGroupChatParticipantParams } from "../utils/validation/chatValidation.js"
+import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExists, getChatFromIdService, getUserIsChatParticipantService, getUserIsChatCreator, addGroupChatParticipant } from "../services/chatServices.js"
 import { getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
 
 export const createPrivateChatController = async (request, response) => {
@@ -51,6 +51,42 @@ export const createGroupChatController = async (request, response) => {
         response.status(201).send("Group chat was created.")
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const addGroupChatParticipantController = async (request, response) => {
+    try {
+
+        if (!validateAddGroupChatParticipantParams(request.body)) return response.status(400).send("Invalid parameters!")
+
+        const { chatId, participantUsername } = request.body
+        const token = request.headers.authorization
+
+        const user = await getUserFromJWTService(token)
+        const participant = await getUserFromUsernameService(participantUsername)
+
+        const chat = await getChatFromIdService(chatId)
+
+        if (!user || !participant) return response.status(404).send("User or users not found.")
+
+        if (!chat) return response.status(404).send("Chat not found.")
+
+        if (!chat.isGroup) return response.status(403).send("Can't add participants to private chat!")
+
+        const userIsChatParticipant = await getUserIsChatParticipantService(user.id, chat.id)
+        const participantIsChatParticipant = await getUserIsChatParticipantService(participant.id, chat.id)
+        const userIsChatCreator = await getUserIsChatCreator(user.id, chat.id)
+
+        if (!userIsChatParticipant || !userIsChatCreator) return response.status(403).send("You can't add participants!")
+
+        if (participantIsChatParticipant) return response.status(403).send("User is already chat participant.")
+
+        await addGroupChatParticipant(chat, participant)
+
+        response.status(201).send("Participant added to group chat.")
+
+    } catch (_error) {
+        response.status.send("Something went wrong! Try again later.")
     }
 }
 

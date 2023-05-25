@@ -71,3 +71,16 @@ export const getChatFromIdService = async (chatId) => {
 export const getGroupChatNameExists = async (chatName) => {
     return await db.chats.findOne({ where: { chatName, isGroup: true } }) ? true : false
 }
+
+export const getUserIsChatCreator = async (userId, chatId) => {
+    return await db.chats.findOne({
+        where: {
+            id: chatId,
+            creatorId: userId
+        }
+    }) ? true : false
+}
+
+export const addGroupChatParticipant = async (chat, participant) => {
+    await chat.addChatParticipants([participant])
+}
