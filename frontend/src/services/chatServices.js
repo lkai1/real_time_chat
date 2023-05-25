@@ -1,5 +1,7 @@
 import axios from "axios"
 import { getAuthToken } from "../utils/authToken"
+import { validateUsername } from "../utils/validation/authValidation"
+import { validateChatName } from "../utils/validation/chatValidation"
 
 export const getUserChatsService = async () => {
 
@@ -14,6 +16,11 @@ export const getUserChatsService = async () => {
 
 export const createPrivateChatService = async (participantUsername) => {
     const result = { success: false, message: "" }
+
+    if (!validateUsername(participantUsername)) {
+        result.message = "Tarkista oikeinkirjoitus."
+        return result
+    }
 
     const response = await axios.post("/api/chat/private",
         {
@@ -42,6 +49,11 @@ export const createPrivateChatService = async (participantUsername) => {
 
 export const createGroupChatService = async (chatName) => {
     const result = { success: false, message: "" }
+
+    if (!validateChatName(chatName)) {
+        result.message = "Tarkista oikeinkirjoitus."
+        return result
+    }
 
     const response = await axios.post("/api/chat/group",
         {

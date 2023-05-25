@@ -1,6 +1,6 @@
 import axios from "axios"
 import { clearAuthToken, getAuthToken, setAuthToken } from "../utils/authToken"
-import { validateUsername, validatePassword } from "../lib/validation/authValidation"
+import { validateUsername, validatePassword } from "../utils/validation/authValidation"
 
 export const loginService = async (loginCreds) => {
     const result = { success: false, message: "" }

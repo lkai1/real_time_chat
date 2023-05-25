@@ -1,4 +1,4 @@
-import { validateChatId, validateMessage } from "../lib/validation/messageValidation"
+import { validateChatId, validateMessage } from "../utils/validation/messageValidation"
 import { getAuthToken } from "../utils/authToken"
 import axios from "axios"
 
