@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { login } from "../services/auth.js"
+import { loginService } from "../services/authServices.js"
 import { useNavigate } from "react-router-dom"
 import styles from "./LoginPage.module.css"
 
@@ -11,7 +11,7 @@ const LoginPage = () => {
     const navigate = useNavigate()
 
     const handleFormSubmit = async (emptyLoginCreds, loginCreds, setLoginCreds, setNotification) => {
-        const result = await login(loginCreds)
+        const result = await loginService(loginCreds)
         setLoginCreds(emptyLoginCreds)
         result.success ?
             navigate("/main") :
