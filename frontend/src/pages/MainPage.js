@@ -1,20 +1,17 @@
-import { useState, useEffect } from "react"
-import { getUserInfo } from "../services/user"
+import styles from "./MainPage.module.css"
+import TopContainer from "./pageComponents/MainPage/topContainer/TopContainer.js"
+import MiddleLeftContainer from "./pageComponents/MainPage/middleLeftContainer/MiddleLeftContainer.js"
+import MiddleRightContainer from "./pageComponents/MainPage/middleRightContainer/MiddleRightContainer"
 
 const MainPage = () => {
-    const [userInfoState, setUserInfoState] = useState({})
-
-    useEffect(() => {
-        const getData = async () => {
-            const userInfo = await getUserInfo()
-            setUserInfoState(userInfo)
-        }
-        getData()
-    }, [])
 
     return (
-        <div>
-            {userInfoState.username}
+        <div className={styles.mainContainer}>
+            <TopContainer />
+            <div className={styles.middleContainer}>
+                <MiddleLeftContainer />
+                <MiddleRightContainer />
+            </div>
         </div>
     )
 }

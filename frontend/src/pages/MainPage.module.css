@@ -1,0 +1,11 @@
+.mainContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.middleContainer {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 110px);
+    margin: 10px;
+}
