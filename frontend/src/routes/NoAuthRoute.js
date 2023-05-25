@@ -1,4 +1,4 @@
-import { verify_login } from "../services/auth"
+import { verifyLoginService } from "../services/authServices.js"
 import { useState, useEffect } from 'react'
 import { Navigate } from "react-router-dom"
 
@@ -7,7 +7,7 @@ const NoAuthRoute = ({ children }) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await verify_login()
+            const response = await verifyLoginService()
             setVerifiedLogin(response)
         }
         getData()
