@@ -13,9 +13,10 @@ const MiddleLeftContainer = () => {
             <ChatList />
             <div className={styles.bottomButtonsContainer}>
                 <button className={styles.addChatButton}
+                    type="button"
                     onClick={() => { setShowCreateNewChatModal(true) }}
                 >
-                    <AddIcon fill={"white"} />
+                    <AddIcon fill={"white"} heigth={"30px"} width={"30px"} />
                     <p>Luo uusi keskustelu</p>
                 </button>
             </div>

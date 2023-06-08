@@ -1,6 +1,6 @@
 .mainContainer {
     padding: 15px;
-    height: calc(100% - 100px);
+    height: calc(100% - 90px);
     width: calc(100% - 30px);
     display: flex;
     flex-direction: column;

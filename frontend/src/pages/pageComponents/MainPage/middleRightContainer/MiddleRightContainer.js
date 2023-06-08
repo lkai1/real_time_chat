@@ -1,8 +1,9 @@
-import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext"
-import MessageList from "./MessageList"
+import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js"
+import MessageList from "./MessageList.js"
 import styles from "./MiddleRightContainer.module.css"
 import { useContext, useState } from "react"
-import { createMessageService } from "../../../../services/messageServices"
+import { createMessageService } from "../../../../services/messageServices.js"
+import ChatSettings from "./ChatSettings.js"
 
 const MiddleRightContainer = () => {
 
@@ -20,13 +21,17 @@ const MiddleRightContainer = () => {
     }
 
     return (
-        <div className={notification ? styles.mainContainerWithNotificationShown : styles.mainContainer}>
+        <div className={
+            notification ?
+                styles.mainContainerWithNotificationShown
+                : styles.mainContainer}>
+            {selectedChatState.id && <ChatSettings />}
             <MessageList />
             <p className={notification ? styles.notificationShown : styles.notification}>{notification}</p>
-            {selectedChatState &&
+            {selectedChatState.id &&
                 <form
                     onSubmit={(event) => {
-                        handleFormSubmit(event, selectedChatState, message, setMessage)
+                        handleFormSubmit(event, selectedChatState.id, message, setMessage)
                     }}
                 >
                     <div className={styles.createMessageFormContentContainer}>

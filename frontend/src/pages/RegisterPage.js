@@ -81,6 +81,7 @@ const RegisterPage = () => {
                     </div>
                 </form>
                 <button className={styles.toLoginButton}
+                    type="button"
                     onClick={() => { navigate("/login") }}
                 >
                     Kirjaudu sisään?

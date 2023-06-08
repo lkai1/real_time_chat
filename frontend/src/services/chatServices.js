@@ -1,6 +1,6 @@
 import axios from "axios"
-import { getAuthToken } from "../utils/authToken"
-import { validateChatId, validateChatName, validateUsername } from "../utils/validation/chatValidation"
+import { getAuthToken } from "../utils/authToken.js"
+import { validateChatId, validateChatName, validateUsername } from "../utils/validation/chatValidation.js"
 
 export const getUserChatsService = async () => {
 
@@ -77,7 +77,7 @@ export const createGroupChatService = async (chatName) => {
     return result
 }
 
-export const addGroupChatParticipant = async (chatId, participantUsername) => {
+export const addGroupChatParticipantService = async (chatId, participantUsername) => {
     const result = { success: false, message: "" }
 
     if (!validateUsername(participantUsername)) {
@@ -112,5 +112,38 @@ export const addGroupChatParticipant = async (chatId, participantUsername) => {
     }
 
     return result
+}
+
+export const deleteChatService = async (chatId) => {
+    const result = { success: false, message: "" }
+
+    if (!validateChatId(chatId)) {
+        result.message = "Chatin tunniste on epämuodostunut!"
+        return result
+    }
+
+    const response = await axios.delete("/api/chat", {
+        headers: {
+            Authorization: getAuthToken()
+        },
+        data: {
+            chatId
+        }
+    }
+
+    ).catch((e) => { return e.response })
+
+    if (response.status === 200) {
+        result.success = true
+    } else if (response.status === 403) {
+        result.message = "Et voi poistaa chattia."
+    } else if (response.status === 404) {
+        result.message = "Käyttäjää tai chattia ei löytynyt. Onko joku näistä poistettu? Kokeile päivittää sivu."
+    } else {
+        result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
+    }
+
+    return result
+
 }
 

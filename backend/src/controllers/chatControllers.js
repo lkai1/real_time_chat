@@ -1,5 +1,5 @@
 import { validateCreatePrivateChatParams, validateCreateGroupChatParams, validateAddGroupChatParticipantParams } from "../utils/validation/chatValidation.js"
-import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExists, getChatFromIdService, getUserIsChatParticipantService, getUserIsChatCreator, addGroupChatParticipant } from "../services/chatServices.js"
+import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExistsService, getChatFromIdService, getUserIsChatParticipantService, getUserIsChatCreatorService, addGroupChatParticipantService, deleteChatService } from "../services/chatServices.js"
 import { getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
 
 export const createPrivateChatController = async (request, response) => {
@@ -43,7 +43,7 @@ export const createGroupChatController = async (request, response) => {
 
         if (!user) return response.status(404).send("User not found.")
 
-        const chatNameExists = await getGroupChatNameExists(chatName)
+        const chatNameExists = await getGroupChatNameExistsService(chatName)
         if (chatNameExists) return response.status(403).send("Group chat name is already taken.")
 
         await createGroupChatService(user, chatName)
@@ -75,13 +75,13 @@ export const addGroupChatParticipantController = async (request, response) => {
 
         const userIsChatParticipant = await getUserIsChatParticipantService(user.id, chat.id)
         const participantIsChatParticipant = await getUserIsChatParticipantService(participant.id, chat.id)
-        const userIsChatCreator = await getUserIsChatCreator(user.id, chat.id)
+        const userIsChatCreator = await getUserIsChatCreatorService(user.id, chat.id)
 
         if (!userIsChatParticipant || !userIsChatCreator) return response.status(403).send("You can't add participants!")
 
         if (participantIsChatParticipant) return response.status(403).send("User is already chat participant.")
 
-        await addGroupChatParticipant(chat, participant)
+        await addGroupChatParticipantService(chat, participant)
 
         response.status(201).send("Participant added to group chat.")
 
@@ -101,6 +101,26 @@ export const getUserChatsController = async (request, response) => {
         const chats = await getUserChatsService(user)
 
         response.status(200).json(chats)
+    } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const deleteChatController = async (request, response) => {
+    try {
+        const token = request.headers.authorization
+        const { chatId } = request.body
+
+        const user = await getUserFromJWTService(token)
+        const chat = await getChatFromIdService(chatId)
+
+        if (!user) return response.status(404).send("User not found.")
+        if (!chat) return response.status(404).send("Chat not found.")
+        if (chat.creatorId !== user.id) return response.status(403).send("Only chat creator can delete chat.")
+
+        await deleteChatService(chat)
+
+        response.status(200).send("Chat deleted.")
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
     }

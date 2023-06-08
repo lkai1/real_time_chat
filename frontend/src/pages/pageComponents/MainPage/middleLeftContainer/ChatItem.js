@@ -1,9 +1,9 @@
 import styles from "./ChatItem.module.css"
-import { UserInfoContext } from "../../../../Contexts/UserInfoContext"
+import { UserInfoContext } from "../../../../Contexts/UserInfoContext.js"
 import { useContext } from "react"
 import { ReactComponent as GroupIcon } from "../../../../lib/icons/groupIcon.svg"
 import { ReactComponent as UserIcon } from "../../../../lib/icons/userIcon.svg"
-import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext"
+import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js"
 
 const ChatItem = ({ chat }) => {
 
@@ -25,9 +25,9 @@ const ChatItem = ({ chat }) => {
     return (
         <div className={styles.mainContainer}
             onClick={() => {
-                setSelectedChatState(chat.id)
+                setSelectedChatState(chat)
             }}>
-            <div className={selectedChatState === chat.id ? styles.selectedChatIconContainer : styles.chatIconContainer}>
+            <div className={selectedChatState.id === chat.id ? styles.selectedChatIconContainer : styles.chatIconContainer}>
                 {chatIcon}
             </div>
             <div>

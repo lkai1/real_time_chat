@@ -1,16 +1,15 @@
 import { createContext, useEffect, useState, useMemo } from "react";
-import { getChatMessagesService } from "../services/messageServices";
+import { getChatMessagesService } from "../services/messageServices.js";
 
 export const SelectedChatContext = createContext({})
 
 const SelectedChatProvider = ({ children }) => {
-
-    const [selectedChatState, setSelectedChatState] = useState("")
+    const [selectedChatState, setSelectedChatState] = useState({})
     const [selectedChatMessagesState, setSelectedChatMessagesState] = useState([])
 
     useEffect(() => {
-        if (selectedChatState) {
-            getChatMessagesService(selectedChatState)
+        if (selectedChatState.id) {
+            getChatMessagesService(selectedChatState.id)
                 .then((chatMessages) => {
                     setSelectedChatMessagesState(chatMessages)
                 })
@@ -22,9 +21,10 @@ const SelectedChatProvider = ({ children }) => {
         () => ({
             selectedChatState,
             setSelectedChatState,
-            selectedChatMessagesState
+            selectedChatMessagesState,
+            setSelectedChatMessagesState
         }),
-        [selectedChatState, setSelectedChatState, selectedChatMessagesState],
+        [selectedChatState, selectedChatMessagesState],
     );
 
     return (

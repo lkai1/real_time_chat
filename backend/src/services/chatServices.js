@@ -68,11 +68,11 @@ export const getChatFromIdService = async (chatId) => {
     return await db.chats.findOne({ where: { id: chatId } })
 }
 
-export const getGroupChatNameExists = async (chatName) => {
+export const getGroupChatNameExistsService = async (chatName) => {
     return await db.chats.findOne({ where: { chatName, isGroup: true } }) ? true : false
 }
 
-export const getUserIsChatCreator = async (userId, chatId) => {
+export const getUserIsChatCreatorService = async (userId, chatId) => {
     return await db.chats.findOne({
         where: {
             id: chatId,
@@ -81,6 +81,12 @@ export const getUserIsChatCreator = async (userId, chatId) => {
     }) ? true : false
 }
 
-export const addGroupChatParticipant = async (chat, participant) => {
+export const addGroupChatParticipantService = async (chat, participant) => {
     await chat.addChatParticipants([participant])
+}
+
+export const deleteChatService = async (chat) => {
+    await db.messages.destroy({ where: { chatId: chat.id } })
+    await db.chatParticipants.destroy({ where: { chatId: chat.id } })
+    await chat.destroy({ where: { id: chat.id } })
 }

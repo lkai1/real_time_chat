@@ -1,9 +1,9 @@
 import { useContext } from "react"
 import styles from "./MessageList.module.css"
-import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext"
+import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js"
 import { v4 as uuidv4 } from "uuid"
-import { UserInfoContext } from "../../../../Contexts/UserInfoContext"
-import { getTimestampStringFromISODateTime } from "../../../../utils/timestamp"
+import { UserInfoContext } from "../../../../Contexts/UserInfoContext.js"
+import { getTimestampStringFromISODateTime } from "../../../../utils/timestamp.js"
 
 const MessageList = () => {
 
@@ -33,7 +33,7 @@ const MessageList = () => {
         <div className={styles.mainContainer}>
             {!selectedChatMessagesState[0] ?
                 <div className={styles.noMessagesContainer}>
-                    {!selectedChatState ?
+                    {!selectedChatState.id ?
                         <p className={styles.noMessagesText}>
                             Voit avata tai luoda uuden chatin vasemmalta
                         </p>

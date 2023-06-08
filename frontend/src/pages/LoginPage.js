@@ -67,6 +67,7 @@ const LoginPage = () => {
                     </div>
                 </form>
                 <button className={styles.toRegistrationButton}
+                    type="button"
                     onClick={() => { navigate("/register") }}
                 >
                     Rekisteröidy?

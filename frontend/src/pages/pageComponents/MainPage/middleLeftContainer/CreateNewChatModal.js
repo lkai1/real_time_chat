@@ -1,7 +1,7 @@
 import styles from "./CreateNewChatModal.module.css"
 import { useState } from "react"
 import { ReactComponent as CloseIcon } from "../../../../lib/icons/closeIcon.svg"
-import { createPrivateChatService, createGroupChatService } from "../../../../services/chatServices"
+import { createPrivateChatService, createGroupChatService } from "../../../../services/chatServices.js"
 
 const CreateNewChatModal = ({ isShown, setIsShown }) => {
 
@@ -28,6 +28,7 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                 <div className={styles.topContainer}>
                     <p className={styles.topTitle}>Luo uusi keskustelu</p>
                     <button className={styles.closeButton}
+                        type="button"
                         onClick={() => { setIsShown(false) }}
                     >
                         <CloseIcon fill={"rgb(70,70,70)"} />
@@ -36,11 +37,13 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                 <p className={notification.color === 1 ? styles.notificationText : styles.notificationErrorText}>{notification.value}</p>
                 <div className={styles.chatTypeSelectionButtonsContainer}>
                     <button className={styles.chatTypeSelectionButton}
+                        type="button"
                         onClick={() => { setSelectedChatType(1) }}
                     >
                         Yksityinen
                     </button>
                     <button className={styles.chatTypeSelectionButton}
+                        type="button"
                         onClick={() => { setSelectedChatType(2) }}
                     >
                         Ryhmä
@@ -55,6 +58,7 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                             onChange={(event) => { setPrivateChatParticipantUsername(event.target.value) }}
                         />
                         <button
+                            type="button"
                             className={styles.createButton}
                             onClick={() => {
                                 handleCreatePrivateChatClick(privateChatParticipantUsername, setNotification)
@@ -73,6 +77,7 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                                 onChange={(event) => { setGroupChatName(event.target.value) }}
                             />
                             <button
+                                type="button"
                                 className={styles.createButton}
                                 onClick={() => {
                                     handleCreateGroupChatClick(groupChatName, setNotification)
