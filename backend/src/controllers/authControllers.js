@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import env_vars from "../config/environment_variables.js"
 import { validateRegisterParams, validateLoginParams } from "../utils/validation/authValidation.js"
 import createPasswordHash from "../utils/createPasswordHash.js"
-import { createUserService, getUsernameExists } from "../services/userServices.js"
+import { createUserService, getUsernameExistsService } from "../services/userServices.js"
 
 export const registerController = async (request, response) => {
   try {
@@ -13,7 +13,7 @@ export const registerController = async (request, response) => {
 
     const { username, password } = request.body
 
-    const usernameExists = await getUsernameExists(username)
+    const usernameExists = await getUsernameExistsService(username)
     if (usernameExists) return response.status(403).send("Username is already taken.")
 
     const hash = await createPasswordHash(password)

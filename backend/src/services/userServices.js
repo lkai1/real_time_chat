@@ -14,6 +14,6 @@ export const createUserService = async (username, hash) => {
     return await db.users.create({ username, hash })
 }
 
-export const getUsernameExists = async (username) => {
+export const getUsernameExistsService = async (username) => {
     return await db.users.findOne({ where: { username } }) ? true : false
 }
