@@ -1,7 +1,7 @@
 import { getUserFromJWTService } from "../services/userServices.js"
-import { validateCreateMessageParams, validateGetChatMessagesParams } from "../utils/validation/messageValidation.js"
+import { validateCreateMessageParams, validateGetChatMessagesParams, validateDeleteAllUserMessagesFromChatParams } from "../utils/validation/messageValidation.js"
 import { getChatFromIdService, getUserIsChatParticipantService } from "../services/chatServices.js"
-import { createMessageService, getMessagesFromChatService } from "../services/messageServices.js"
+import { createMessageService, deleteAllUserMessagesFromChatService, getMessagesFromChatService } from "../services/messageServices.js"
 
 export const createMessageController = async (request, response) => {
     try {
@@ -49,6 +49,32 @@ export const getChatMessagesController = async (request, response) => {
         response.status(200).json(messages)
 
     } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const deleteAllUserMessagesFromChatController = async (request, response) => {
+    try {
+
+        if (!validateDeleteAllUserMessagesFromChatParams(request.body)) return response.status(400).send("Invalid parameters!")
+
+        const token = request.headers.authorization
+        const { chatId } = request.body
+        const user = await getUserFromJWTService(token)
+        const chat = await getChatFromIdService(chatId)
+
+        if (!chat || !user) return response.status(404).send("Chat or user not found!")
+
+        const userIsChatParticipant = await getUserIsChatParticipantService(user.id, chat.id)
+
+        if (!userIsChatParticipant) return response.status(403).send("User is not chat participant!")
+
+        await deleteAllUserMessagesFromChatService(chat.id, user.id)
+
+        return response.status(200).send("All user messages deleted from chat.")
+
+    } catch (_error) {
+        console.log(_error)
         response.status(500).send("Something went wrong! Try again later.")
     }
 }

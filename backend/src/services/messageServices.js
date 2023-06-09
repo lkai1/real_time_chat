@@ -19,3 +19,7 @@ export const getMessagesFromChatService = async (chat) => {
         }
     })
 }
+
+export const deleteAllUserMessagesFromChatService = async (chatId, userId) => {
+    return await db.messages.destroy({ where: { chatId, creatorId: userId } })
+}

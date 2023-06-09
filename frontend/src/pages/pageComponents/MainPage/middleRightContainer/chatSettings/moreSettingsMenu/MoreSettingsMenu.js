@@ -4,6 +4,7 @@ import { useState, useContext } from "react"
 import DeleteChatMenu from "./DeleteChatMenu.js"
 import { SelectedChatContext } from "../../../../../../Contexts/SelectedChatContext.js"
 import { UserInfoContext } from "../../../../../../Contexts/UserInfoContext.js"
+import DeleteUserMessagesMenu from "./DeleteUserMessagesMenu.js"
 
 const MoreSettingsMenu = () => {
 
@@ -26,6 +27,7 @@ const MoreSettingsMenu = () => {
             <div className={isMenuShown ? styles.menuContainer : styles.hiddenMenuContainer}>
                 <div className={styles.contentContainer}>
                     {showDeleteChatMenu && <DeleteChatMenu />}
+                    <DeleteUserMessagesMenu />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-import { validateChatId, validateMessage } from "../utils/validation/messageValidation"
-import { getAuthToken } from "../utils/authToken"
+import { validateChatId, validateMessage } from "../utils/validation/messageValidation.js"
+import { getAuthToken } from "../utils/authToken.js"
 import axios from "axios"
 
 export const getChatMessagesService = async (chatId) => {
@@ -42,6 +42,33 @@ export const createMessageService = async (chatId, message) => {
     })
 
     if (response.status === 201) result.success = true
+
+    return result
+}
+
+export const deleteAllUserMessagesFromChatService = async (chatId) => {
+    const result = { success: false, message: "" }
+
+    if (!validateChatId(chatId)) {
+        result.message = "Viestien poistamisessa esiintyi virhe."
+        return result
+    }
+
+    const response = await axios.delete("/api/message/all_from_user", {
+        headers: {
+            Authorization: getAuthToken()
+        },
+        data: {
+            chatId
+        }
+    }
+    ).catch((error) => {
+        console.log(error)
+        result.message = "Viestien poistamisessa esiintyi virhe."
+        return error.response
+    })
+
+    if (response.status === 200) result.success = true
 
     return result
 }
