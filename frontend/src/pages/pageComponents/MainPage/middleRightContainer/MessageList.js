@@ -4,6 +4,7 @@ import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js
 import { v4 as uuidv4 } from "uuid"
 import { UserInfoContext } from "../../../../Contexts/UserInfoContext.js"
 import { getTimestampStringFromISODateTime } from "../../../../utils/timestamp.js"
+import DeleteMessageMenu from "./messageList/DeleteMessageMenu.js"
 
 const MessageList = () => {
 
@@ -51,7 +52,10 @@ const MessageList = () => {
                                 key={uuidv4()}
                                 className={userInfoState.id === message.messageCreator.id ? styles.userMessageContainer : styles.messageContainer}>
                                 <div className={userInfoState.id === message.messageCreator.id ? styles.userMessageContainer : styles.messageContainer}>
-                                    <UsernameAndTimestamp message={message} />
+                                    <div className={styles.messageTopContainer}>
+                                        {userInfoState.id === message.messageCreator.id && <DeleteMessageMenu messageId={message.id} />}
+                                        <UsernameAndTimestamp message={message} />
+                                    </div>
                                     <p className={userInfoState.id === message.messageCreator.id ? styles.userMessageText : styles.messageText}>
                                         {message.value}
                                     </p>

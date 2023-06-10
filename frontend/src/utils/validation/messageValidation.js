@@ -14,3 +14,11 @@ export const validateMessage = (message) => {
         && typeof message === "string"
     ) ? true : false
 }
+
+export const validateMessageId = (messageId) => {
+    return (
+        messageId
+        && typeof messageId === "string"
+        && messageId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)
+    ) ? true : false
+}

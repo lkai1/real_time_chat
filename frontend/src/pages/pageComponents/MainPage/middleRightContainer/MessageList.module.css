@@ -49,6 +49,12 @@
     align-items: flex-end;
 }
 
+.messageTopContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .usernameAndTimestampContainer {
     display: flex;
     flex-direction: row;
