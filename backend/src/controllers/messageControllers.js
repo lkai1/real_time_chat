@@ -74,7 +74,6 @@ export const deleteAllUserMessagesFromChatController = async (request, response)
         return response.status(200).send("All user messages deleted from chat.")
 
     } catch (_error) {
-        console.log(_error)
         response.status(500).send("Something went wrong! Try again later.")
     }
 }

@@ -63,7 +63,6 @@ export const deleteAllUserMessagesFromChatService = async (chatId) => {
         }
     }
     ).catch((error) => {
-        console.log(error)
         result.message = "Viestien poistamisessa esiintyi virhe."
         return error.response
     })
