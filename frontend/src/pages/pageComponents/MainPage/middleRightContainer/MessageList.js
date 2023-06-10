@@ -7,7 +7,7 @@ import { getTimestampStringFromISODateTime } from "../../../../utils/timestamp.j
 
 const MessageList = () => {
 
-    const { selectedChatMessagesState, selectedChatState } = useContext(SelectedChatContext)
+    const { selectedChatState } = useContext(SelectedChatContext)
     const { userInfoState } = useContext(UserInfoContext)
 
     const UsernameAndTimestamp = ({ message }) => {
@@ -31,7 +31,7 @@ const MessageList = () => {
 
     return (
         <div className={styles.mainContainer}>
-            {!selectedChatMessagesState[0] ?
+            {!selectedChatState.messages?.[0] ?
                 <div className={styles.noMessagesContainer}>
                     {!selectedChatState.id ?
                         <p className={styles.noMessagesText}>
@@ -45,7 +45,7 @@ const MessageList = () => {
                 </div>
                 :
                 <div className={styles.messageListContainer}>
-                    {[...selectedChatMessagesState].reverse().map((message) => {
+                    {[...selectedChatState.messages].reverse().map((message) => {
                         return (
                             <div
                                 key={uuidv4()}

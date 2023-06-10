@@ -11,16 +11,14 @@ const DeleteChatMenu = () => {
     const [notification, setNotification] = useState("")
     const {
         selectedChatState,
-        setSelectedChatState,
-        setSelectedChatMessagesState
+        emptySelectedChatState
     } = useContext(SelectedChatContext)
 
     const handleDeleteChatClick = async (chatId) => {
         const result = await deleteChatService(chatId)
         if (result.success) {
             setIsMenuShown(false)
-            setSelectedChatState({})
-            setSelectedChatMessagesState([])
+            emptySelectedChatState()
         } else {
             setNotification(result.message)
         }

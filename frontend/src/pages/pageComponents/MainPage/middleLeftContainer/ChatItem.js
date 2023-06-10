@@ -8,7 +8,7 @@ import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js
 const ChatItem = ({ chat }) => {
 
     const { userInfoState, userInfoLoading } = useContext(UserInfoContext)
-    const { selectedChatState, setSelectedChatState } = useContext(SelectedChatContext)
+    const { selectedChatState, updateSelectedChatState } = useContext(SelectedChatContext)
 
     const getChatTitle = (chat, userInfoState, userInfoLoading) => {
         if (userInfoLoading) return ""
@@ -25,7 +25,7 @@ const ChatItem = ({ chat }) => {
     return (
         <div className={styles.mainContainer}
             onClick={() => {
-                setSelectedChatState(chat)
+                updateSelectedChatState(chat)
             }}>
             <div className={selectedChatState.id === chat.id ? styles.selectedChatIconContainer : styles.chatIconContainer}>
                 {chatIcon}
