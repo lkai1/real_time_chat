@@ -26,8 +26,8 @@ const MoreSettingsMenu = () => {
             </button>
             <div className={isMenuShown ? styles.menuContainer : styles.hiddenMenuContainer}>
                 <div className={styles.contentContainer}>
-                    {showDeleteChatMenu && <DeleteChatMenu />}
                     <DeleteUserMessagesMenu />
+                    {showDeleteChatMenu && <DeleteChatMenu />}
                 </div>
             </div>
         </div>
