@@ -16,7 +16,7 @@ const ChatItem = ({ chat }) => {
 
         return chat.chatParticipants?.find((participant) => {
             return participant.username !== userInfoState.username
-        }).username
+        })?.username
     }
 
     const chatType = chat.isGroup ? "Ryhmä" : "Yksityinen"
