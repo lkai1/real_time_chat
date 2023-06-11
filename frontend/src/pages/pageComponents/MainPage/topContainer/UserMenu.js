@@ -21,6 +21,14 @@ const UserMenu = () => {
                 <UserIcon fill={"white"} />
             </button>
             <div className={isShown ? styles.menu : styles.menuHidden}>
+                <button className={styles.navigateToUserSettingsButton}
+                    type="button"
+                    onClick={() => {
+                        navigate("/user_settings")
+                    }}
+                >
+                    <p className={styles.navigateToUserSettingsButtonText}>Käyttäjäasetukset</p>
+                </button>
                 <button className={styles.logoutButton}
                     type="button"
                     onClick={() => { logoutService(navigate) }}>

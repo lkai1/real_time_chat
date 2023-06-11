@@ -1,11 +1,12 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom"
-import LoginPage from "../pages/LoginPage"
-import RegisterPage from "../pages/RegisterPage"
-import MainPage from "../pages/MainPage"
-import AuthRoute from "./AuthRoute"
-import NoAuthRoute from "./NoAuthRoute"
+import LoginPage from "../pages/LoginPage.js"
+import RegisterPage from "../pages/RegisterPage.js"
+import MainPage from "../pages/MainPage.js"
+import UserSettingsPage from "../pages/UserSettingsPage.js"
+import AuthRoute from "./AuthRoute.js"
+import NoAuthRoute from "./NoAuthRoute.js"
 import UserInfoProvider from "../Contexts/UserInfoContext.js"
-import SelectedChatProvider from "../Contexts/SelectedChatContext"
+import SelectedChatProvider from "../Contexts/SelectedChatContext.js"
 
 
 const Router = () => {
@@ -21,6 +22,13 @@ const Router = () => {
                             <SelectedChatProvider>
                                 <MainPage />
                             </SelectedChatProvider>
+                        </UserInfoProvider>
+                    </AuthRoute>
+                } />
+                <Route path="/user_settings" element={
+                    <AuthRoute>
+                        <UserInfoProvider>
+                            <UserSettingsPage />
                         </UserInfoProvider>
                     </AuthRoute>
                 } />

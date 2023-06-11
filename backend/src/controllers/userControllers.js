@@ -1,4 +1,4 @@
-import { getUserFromJWTService } from "../services/userServices.js"
+import { deleteUserService, getUserFromJWTService } from "../services/userServices.js"
 
 export const getUserInfoFromJWTController = async (request, response) => {
     try {
@@ -12,6 +12,21 @@ export const getUserInfoFromJWTController = async (request, response) => {
         } catch (e) {
             response.status(400).send("Invalid token!")
         }
+
+    } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const deleteUserController = async (request, response) => {
+    try {
+
+        const token = request.headers.authorization
+
+        const user = await getUserFromJWTService(token)
+        await deleteUserService(user.id)
+
+        response.status(200).send("User deleted.")
 
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")

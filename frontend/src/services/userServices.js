@@ -10,3 +10,20 @@ export const getUserInfoService = async () => {
 
     return response.data
 }
+
+export const deleteUserService = async () => {
+    const result = { success: false, message: "" }
+
+    const response = await axios.delete("/api/user", {
+        headers: {
+            Authorization: getAuthToken()
+        }
+    }).catch((error) => {
+        result.message = "Käyttäjän poistamisessa esiintyi virhe."
+        return error.response
+    })
+
+    if (response.status === 200) result.success = true
+
+    return result
+}

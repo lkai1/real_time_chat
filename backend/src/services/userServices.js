@@ -17,3 +17,11 @@ export const createUserService = async (username, hash) => {
 export const getUsernameExistsService = async (username) => {
     return await db.users.findOne({ where: { username } }) ? true : false
 }
+
+export const deleteUserService = async (userId) => {
+    await db.messages.destroy({ where: { creatorId: userId } })
+    await db.chats.destroy({ where: { creatorId: userId } })
+    await db.chatParticipants.destroy({ where: { userId } })
+    await db.users.destroy({ where: { id: userId } })
+
+}

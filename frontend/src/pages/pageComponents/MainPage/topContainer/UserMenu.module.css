@@ -50,6 +50,31 @@
     display: none;
 }
 
+.navigateToUserSettingsButton {
+    border: none;
+    width: 100%;
+    background-color: white;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navigateToUserSettingsButtonText {
+    width: 100%;
+    font-family: "Quicksand";
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+.navigateToUserSettingsButton:hover {
+    background-color: rgb(245, 245, 245);
+}
+
 .logoutButton {
     width: 100%;
     border: none;
@@ -59,4 +84,9 @@
     font-weight: bold;
     cursor: pointer;
     font-size: 14px;
+    background-color: rgb(240, 240, 240);
+}
+
+.logoutButton:hover {
+    background-color: rgb(230, 230, 230);
 }
