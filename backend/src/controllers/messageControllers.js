@@ -1,7 +1,7 @@
 import { getUserFromJWTService } from "../services/userServices.js"
 import { validateCreateMessageParams, validateGetChatMessagesParams, validateDeleteAllUserMessagesFromChatParams, validateDeleteUserMessageParams } from "../utils/validation/messageValidation.js"
 import { getChatFromIdService, getUserIsChatParticipantService } from "../services/chatServices.js"
-import { createMessageService, deleteAllUserMessagesFromChatService, deleteUserMessageService, getMessageFromId, getMessagesFromChatService } from "../services/messageServices.js"
+import { createMessageService, deleteAllUserMessagesFromChatService, deleteUserMessageService, getMessageFromIdService, getMessagesFromChatService } from "../services/messageServices.js"
 
 export const createMessageController = async (request, response) => {
     try {
@@ -19,9 +19,9 @@ export const createMessageController = async (request, response) => {
 
         if (!userIsChatParticipant) return response.status(401).send("Unauthorized!")
 
-        await createMessageService(user.id, chat.id, message)
+        const messageToSend = await createMessageService(user.id, chat.id, message)
 
-        response.status(201).send("Message created.")
+        response.status(201).json(messageToSend)
 
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
@@ -86,7 +86,7 @@ export const deleteUserMessageController = async (request, response) => {
         const token = request.headers.authorization
         const { messageId } = request.body
         const user = await getUserFromJWTService(token)
-        const message = await getMessageFromId(messageId)
+        const message = await getMessageFromIdService(messageId)
 
         if (!message || !user) return response.status(404).send("Message or user not found!")
 

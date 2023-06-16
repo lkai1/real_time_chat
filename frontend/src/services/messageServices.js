@@ -20,7 +20,7 @@ export const createMessageService = async (chatId, message) => {
 
     const result = { success: false, message: "" }
 
-    if (!message) return
+    if (!message) return result
 
     if (!validateChatId(chatId) ||
         !validateMessage(message)) {
@@ -40,9 +40,10 @@ export const createMessageService = async (chatId, message) => {
         result.message = "Viestin lähetyksessä esiintyi virhe."
         return error.response
     })
-
-    if (response.status === 201) result.success = true
-
+    if (response.status === 201) {
+        result.success = true
+        result.message = response.data
+    }
     return result
 }
 

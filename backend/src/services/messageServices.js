@@ -20,7 +20,7 @@ export const getMessagesFromChatService = async (chat) => {
     })
 }
 
-export const getMessageFromId = async (messageId) => {
+export const getMessageFromIdService = async (messageId) => {
     return await db.messages.findOne({ where: { id: messageId } })
 }
 
