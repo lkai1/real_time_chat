@@ -26,7 +26,7 @@ export const getUsernameExistsService = async (username) => {
 export const deleteUserService = async (userId) => {
     await db.messages.destroy({ where: { creatorId: userId } })
     const chatsCreatedByUser = await getChatsCreatedByUser(userId)
-    console.log(JSON.stringify(chatsCreatedByUser))
+
     for (const chat of chatsCreatedByUser) {
         await deleteChatService(chat)
     }

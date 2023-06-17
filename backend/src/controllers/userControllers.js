@@ -29,7 +29,6 @@ export const deleteUserController = async (request, response) => {
         response.status(200).send("User deleted.")
 
     } catch (_error) {
-        console.log(_error)
         response.status(500).send("Something went wrong! Try again later.")
     }
 }
