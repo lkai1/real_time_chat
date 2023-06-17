@@ -53,7 +53,7 @@ const MessageList = () => {
                                 className={userInfoState.id === message.messageCreator.id ? styles.userMessageContainer : styles.messageContainer}>
                                 <div className={userInfoState.id === message.messageCreator.id ? styles.userMessageContainer : styles.messageContainer}>
                                     <div className={styles.messageTopContainer}>
-                                        {userInfoState.id === message.messageCreator.id && <DeleteMessageMenu messageId={message.id} />}
+                                        {userInfoState.id === message.messageCreator.id && <DeleteMessageMenu messageId={message.id} chatId={selectedChatState.id} />}
                                         <UsernameAndTimestamp message={message} />
                                     </div>
                                     <p className={userInfoState.id === message.messageCreator.id ? styles.userMessageText : styles.messageText}>

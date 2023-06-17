@@ -23,9 +23,9 @@ export const createPrivateChatController = async (request, response) => {
 
         if (privateChatBetweenUsers) return response.status(403).send("Private chat between these users already exists!")
 
-        await createPrivateChatService(user, participant)
+        const chatId = await createPrivateChatService(user, participant)
 
-        response.status(201).send("Private chat was created.")
+        response.status(201).json(chatId)
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
     }
@@ -46,9 +46,9 @@ export const createGroupChatController = async (request, response) => {
         const chatNameExists = await getGroupChatNameExistsService(chatName)
         if (chatNameExists) return response.status(403).send("Group chat name is already taken.")
 
-        await createGroupChatService(user, chatName)
+        const chatId = await createGroupChatService(user, chatName)
 
-        response.status(201).send("Group chat was created.")
+        response.status(201).json(chatId)
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
     }
@@ -83,7 +83,7 @@ export const addGroupChatParticipantController = async (request, response) => {
 
         await addGroupChatParticipantService(chat, participant)
 
-        response.status(201).send("Participant added to group chat.")
+        response.status(201).json(participant.id)
 
     } catch (_error) {
         response.status.send("Something went wrong! Try again later.")

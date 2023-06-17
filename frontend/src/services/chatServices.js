@@ -8,13 +8,13 @@ export const getUserChatsService = async () => {
         headers: {
             Authorization: getAuthToken()
         }
-    }).catch((_error) => { return })
+    }).catch((e) => { return e.response })
 
     return response.data
 }
 
 export const createPrivateChatService = async (participantUsername) => {
-    const result = { success: false, message: "" }
+    const result = { success: false, message: "", data: "" }
 
     if (!validateUsername(participantUsername)) {
         result.message = "Tarkista oikeinkirjoitus."
@@ -33,6 +33,7 @@ export const createPrivateChatService = async (participantUsername) => {
     if (response.status === 201) {
         result.success = true
         result.message = "Yksityiskeskustelun luonti onnistui."
+        result.data = response.data
     } else if (response.status === 400) {
         result.message = "Tarkista oikeinkirjoitus."
     } else if (response.status === 403) {
@@ -47,7 +48,7 @@ export const createPrivateChatService = async (participantUsername) => {
 }
 
 export const createGroupChatService = async (chatName) => {
-    const result = { success: false, message: "" }
+    const result = { success: false, message: "", data: "" }
 
     if (!validateChatName(chatName)) {
         result.message = "Tarkista oikeinkirjoitus."
@@ -66,6 +67,7 @@ export const createGroupChatService = async (chatName) => {
     if (response.status === 201) {
         result.success = true
         result.message = "Ryhmäkeskustelun luonti onnistui."
+        result.data = response.data
     } else if (response.status === 400) {
         result.message = "Tarkista oikeinkirjoitus."
     } else if (response.status === 403) {
@@ -78,7 +80,7 @@ export const createGroupChatService = async (chatName) => {
 }
 
 export const addGroupChatParticipantService = async (chatId, participantUsername) => {
-    const result = { success: false, message: "" }
+    const result = { success: false, message: "", data: "" }
 
     if (!validateUsername(participantUsername)) {
         result.message = "Onko käyttäjänimi oikeassa muodossa?"
@@ -103,6 +105,7 @@ export const addGroupChatParticipantService = async (chatId, participantUsername
     if (response.status === 201) {
         result.success = true
         result.message = "Uusi käyttäjä lisätty keskusteluun."
+        result.data = response.data
     } else if (response.status === 403) {
         result.message = "Et voi lisätä käyttäjää tähän keskusteluun!"
     } else if (response.status === 404) {

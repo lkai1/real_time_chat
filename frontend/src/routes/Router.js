@@ -7,6 +7,7 @@ import AuthRoute from "./AuthRoute.js"
 import NoAuthRoute from "./NoAuthRoute.js"
 import UserInfoProvider from "../Contexts/UserInfoContext.js"
 import SelectedChatProvider from "../Contexts/SelectedChatContext.js"
+import SocketProvider from "../Contexts/SocketContext.js"
 
 
 const Router = () => {
@@ -20,7 +21,9 @@ const Router = () => {
                     <AuthRoute>
                         <UserInfoProvider>
                             <SelectedChatProvider>
-                                <MainPage />
+                                <SocketProvider>
+                                    <MainPage />
+                                </SocketProvider>
                             </SelectedChatProvider>
                         </UserInfoProvider>
                     </AuthRoute>
@@ -28,7 +31,9 @@ const Router = () => {
                 <Route path="/user_settings" element={
                     <AuthRoute>
                         <UserInfoProvider>
-                            <UserSettingsPage />
+                            <SocketProvider>
+                                <UserSettingsPage />
+                            </SocketProvider>
                         </UserInfoProvider>
                     </AuthRoute>
                 } />

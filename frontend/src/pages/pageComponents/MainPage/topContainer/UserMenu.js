@@ -4,12 +4,14 @@ import { useContext, useState } from "react"
 import { UserInfoContext } from "../../../../Contexts/UserInfoContext.js"
 import { logoutService } from "../../../../services/authServices.js"
 import { useNavigate } from "react-router-dom"
+import { SocketContext } from "../../../../Contexts/SocketContext.js"
 
 const UserMenu = () => {
 
     const [isShown, setIsShown] = useState(false)
     const { userInfoState } = useContext(UserInfoContext)
     const navigate = useNavigate()
+    const { socket } = useContext(SocketContext)
 
     return (
         <div className={styles.mainContainer}>
@@ -31,7 +33,10 @@ const UserMenu = () => {
                 </button>
                 <button className={styles.logoutButton}
                     type="button"
-                    onClick={() => { logoutService(navigate) }}>
+                    onClick={() => {
+                        socket.disconnect()
+                        logoutService(navigate)
+                    }}>
                     Kirjaudu ulos
                 </button>
             </div>

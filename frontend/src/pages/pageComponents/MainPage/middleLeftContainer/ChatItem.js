@@ -4,11 +4,13 @@ import { useContext } from "react"
 import { ReactComponent as GroupIcon } from "../../../../lib/icons/groupIcon.svg"
 import { ReactComponent as UserIcon } from "../../../../lib/icons/userIcon.svg"
 import { SelectedChatContext } from "../../../../Contexts/SelectedChatContext.js"
+import { SocketContext } from "../../../../Contexts/SocketContext.js"
 
 const ChatItem = ({ chat }) => {
 
     const { userInfoState, userInfoLoading } = useContext(UserInfoContext)
     const { selectedChatState, updateSelectedChatState } = useContext(SelectedChatContext)
+    const { socket } = useContext(SocketContext)
 
     const getChatTitle = (chat, userInfoState, userInfoLoading) => {
         if (userInfoLoading) return ""
@@ -25,6 +27,7 @@ const ChatItem = ({ chat }) => {
     return (
         <div className={styles.mainContainer}
             onClick={() => {
+                socket.emit("selectChat", { chatId: chat.id })
                 updateSelectedChatState(chat)
             }}>
             <div className={selectedChatState.id === chat.id ? styles.selectedChatIconContainer : styles.chatIconContainer}>

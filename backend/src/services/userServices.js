@@ -1,5 +1,6 @@
 import db from "../database/db.js"
 import jwt from "jsonwebtoken"
+import { deleteChatService, getChatsCreatedByUser } from "./chatServices.js"
 
 export const getUserFromJWTService = async (token) => {
     const decodedJWT = jwt.decode(token)
@@ -8,6 +9,10 @@ export const getUserFromJWTService = async (token) => {
 
 export const getUserFromUsernameService = async (username) => {
     return await db.users.findOne({ where: { username }, attributes: ["id", "username"] })
+}
+
+export const getUserFromIdService = async (id) => {
+    return await db.users.findOne({ where: { id }, attributes: ["id", "username"] })
 }
 
 export const createUserService = async (username, hash) => {
@@ -20,7 +25,12 @@ export const getUsernameExistsService = async (username) => {
 
 export const deleteUserService = async (userId) => {
     await db.messages.destroy({ where: { creatorId: userId } })
-    await db.chats.destroy({ where: { creatorId: userId } })
+    const chatsCreatedByUser = await getChatsCreatedByUser(userId)
+    console.log(JSON.stringify(chatsCreatedByUser))
+    for (const chat of chatsCreatedByUser) {
+        await deleteChatService(chat)
+    }
+
     await db.chatParticipants.destroy({ where: { userId } })
     await db.users.destroy({ where: { id: userId } })
 

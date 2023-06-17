@@ -1,22 +1,28 @@
 import styles from "./UserSettingsPage.module.css"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { deleteUserService } from "../services/userServices.js"
 import { ReactComponent as DeleteIcon } from "../lib/icons/deleteIcon.svg"
 import { ReactComponent as CloseIcon } from "../lib/icons/closeIcon.svg"
 import { logoutService } from "../services/authServices.js"
 import { ReactComponent as ArrowLeftIcon } from "../lib/icons/arrowLeftIcon.svg"
+import { SocketContext } from "../Contexts/SocketContext.js"
+import { getUserChatsService } from "../services/chatServices.js"
 
 const UserSettingsPage = () => {
 
     const [isMenuShown, setIsMenuShown] = useState(false)
     const [notification, setNotification] = useState("")
+    const { socket } = useContext(SocketContext)
     const navigate = useNavigate()
 
     const handleDeleteUserClick = async () => {
+        const userChats = await getUserChatsService()
         const result = await deleteUserService()
         if (result.success) {
             setIsMenuShown(false)
+            const userChatIds = userChats.map((chat) => { return chat.Chat.id })
+            socket.emit("userDelete", { userChatIds })
             logoutService(navigate)
         } else {
             setNotification(result.message)

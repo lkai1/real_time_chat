@@ -9,6 +9,7 @@ const SelectedChatProvider = ({ children }) => {
     const valuesToProvide = useMemo(
         () => ({
             selectedChatState,
+            setSelectedChatState,
             updateSelectedChatState: async (chat) => {
                 const messages = await getChatMessagesService(chat.id)
                     .then((chatMessages) => {
@@ -17,12 +18,22 @@ const SelectedChatProvider = ({ children }) => {
 
                 setSelectedChatState({ ...chat, messages })
             },
+            addSelectedChatParticipant: async (participant) => {
+                setSelectedChatState(prevState => {
+                    return { ...prevState, chatParticipants: [...prevState.chatParticipants, participant] }
+                })
+            },
+            deleteSelectedChatParticipant: async (participantId) => {
+                setSelectedChatState(prevState => {
+                    return { ...prevState, chatParticipants: [...prevState.chatParticipants.filter((participant) => { return participant.id !== participantId })] }
+                })
+            },
             emptySelectedChatState: () => {
                 setSelectedChatState({})
             }
         }),
         [selectedChatState]
-    );
+    )
 
     return (
         <SelectedChatContext.Provider value={valuesToProvide}>

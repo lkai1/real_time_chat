@@ -5,8 +5,12 @@ import authRouter from "./routers/authRouter.js"
 import userRouter from "./routers/userRouter.js"
 import messageRouter from "./routers/messageRouter.js"
 import chatRouter from "./routers/chatRouter.js"
+import { createServer } from "http"
+import { initSocket } from "./socket/socket.js"
 
 const app = express()
+const httpServer = createServer(app)
+
 
 app.use((request, response, next) => {
     express.json()(request, response, error => {
@@ -16,6 +20,7 @@ app.use((request, response, next) => {
         next();
     });
 });
+
 app.use(express.urlencoded({ extended: true }))
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
@@ -24,7 +29,8 @@ app.use("/api/chat", chatRouter)
 
 const startApp = async () => {
     await seeder()
-    app.listen(env_vars.APP_PORT, () => console.log(`Server is running at port: ${env_vars.APP_PORT}.`))
+    initSocket(httpServer)
+    httpServer.listen(env_vars.APP_PORT, () => console.log(`Server is running at port: ${env_vars.APP_PORT}.`))
 }
 
 startApp()

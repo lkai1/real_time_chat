@@ -4,19 +4,20 @@ import { ReactComponent as CloseIcon } from "../../../../../../lib/icons/closeIc
 import { useContext, useState } from "react"
 import { SelectedChatContext } from "../../../../../../Contexts/SelectedChatContext.js"
 import { deleteAllUserMessagesFromChatService } from "../../../../../../services/messageServices.js"
+import { SocketContext } from "../../../../../../Contexts/SocketContext.js"
 
 const DeleteUserMessagesMenu = () => {
 
     const [isMenuShown, setIsMenuShown] = useState(false)
     const [notification, setNotification] = useState("")
-    const {
-        selectedChatState,
-    } = useContext(SelectedChatContext)
+    const { selectedChatState } = useContext(SelectedChatContext)
+    const { socket } = useContext(SocketContext)
 
-    const handleDeleteChatClick = async (chatId) => {
+    const handleDeleteAllUserMessagesFromChat = async (chatId) => {
         const result = await deleteAllUserMessagesFromChatService(chatId)
         if (result.success) {
             setIsMenuShown(false)
+            socket.emit("messageDeleteAll", { chatId })
         } else {
             setNotification(result.message)
         }
@@ -49,7 +50,7 @@ const DeleteUserMessagesMenu = () => {
                     <p className={styles.notificationText}>{notification}</p>
                     <button className={styles.deleteButton}
                         type="button"
-                        onClick={() => { handleDeleteChatClick(selectedChatState.id) }}
+                        onClick={() => { handleDeleteAllUserMessagesFromChat(selectedChatState.id) }}
                     >
                         Vahvista
                     </button>

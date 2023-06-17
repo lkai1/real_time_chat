@@ -12,7 +12,7 @@ const AuthRoute = ({ children }) => {
             const result = await verifyLoginService()
             setVerifiedLogin(result)
         }
-        getAuthToken() ? getData() : setVerifiedLogin(false)
+        return () => { getAuthToken() ? getData() : setVerifiedLogin(false) }
     }, [])
 
     if (verifiedLogin === null) return <div></div>

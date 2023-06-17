@@ -5,6 +5,7 @@ import { ReactComponent as CloseIcon } from "../../../../../lib/icons/closeIcon.
 import { UserInfoContext } from "../../../../../Contexts/UserInfoContext.js"
 import { SelectedChatContext } from "../../../../../Contexts/SelectedChatContext.js"
 import { addGroupChatParticipantService } from "../../../../../services/chatServices.js"
+import { SocketContext } from "../../../../../Contexts/SocketContext.js"
 
 const AddParticipantMenu = () => {
     const [isMenuShown, setIsMenuShown] = useState(false)
@@ -13,11 +14,13 @@ const AddParticipantMenu = () => {
 
     const { userInfoState } = useContext(UserInfoContext)
     const { selectedChatState } = useContext(SelectedChatContext)
+    const { socket } = useContext(SocketContext)
 
     const showMainContainer = (selectedChatState.isGroup && userInfoState.id === selectedChatState.creatorId) ? true : false
 
     const handleAddUserClick = async (chatId, username, setNotification) => {
         const result = await addGroupChatParticipantService(chatId, username)
+        if (result.success) socket.emit("chatParticipantAdd", { chatId, participantId: result.data })
         setNotification({ value: result.message, color: result.success ? 1 : 2 })
     }
 

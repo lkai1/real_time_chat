@@ -4,19 +4,24 @@ import styles from "./MiddleRightContainer.module.css"
 import { useContext, useState } from "react"
 import { createMessageService } from "../../../../services/messageServices.js"
 import ChatSettings from "./ChatSettings.js"
+import { SocketContext } from "../../../../Contexts/SocketContext.js"
 
 const MiddleRightContainer = () => {
 
     const [message, setMessage] = useState("")
     const { selectedChatState } = useContext(SelectedChatContext)
+    const { socket } = useContext(SocketContext)
     const [notification, setNotification] = useState("")
 
     const handleFormSubmit = async (event, chatId, message, setMessage) => {
         event.preventDefault()
         const result = await createMessageService(chatId, message)
-
-        if (!result.success) setNotification(result.message)
-
+        if (result.success) {
+            socket.emit("message", {
+                message: result.message,
+                chatId
+            })
+        } else { setNotification(result.message) }
         setMessage("")
     }
 

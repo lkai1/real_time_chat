@@ -1,7 +1,8 @@
 import styles from "./CreateNewChatModal.module.css"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ReactComponent as CloseIcon } from "../../../../lib/icons/closeIcon.svg"
 import { createPrivateChatService, createGroupChatService } from "../../../../services/chatServices.js"
+import { SocketContext } from "../../../../Contexts/SocketContext.js"
 
 const CreateNewChatModal = ({ isShown, setIsShown }) => {
 
@@ -9,15 +10,20 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
     const [privateChatParticipantUsername, setPrivateChatParticipantUsername] = useState("")
     const [groupChatName, setGroupChatName] = useState("")
     const [notification, setNotification] = useState({ value: "", color: 1 })
+    const { socket } = useContext(SocketContext)
 
     const handleCreatePrivateChatClick = async (privateChatParticipantUsername, setNotification) => {
         const result = await createPrivateChatService(privateChatParticipantUsername)
+
+        if (result.success) socket.emit("chatCreate", { chatId: result.data })
 
         setNotification({ value: result.message, color: result.success ? 1 : 2 })
     }
 
     const handleCreateGroupChatClick = async (groupChatName, setNotification) => {
         const result = await createGroupChatService(groupChatName)
+
+        if (result.success) { socket.emit("chatCreate", { chatId: result.data }) }
 
         setNotification({ value: result.message, color: result.success ? 1 : 2 })
     }

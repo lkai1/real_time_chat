@@ -1,18 +1,21 @@
 import styles from "./DeleteMessageMenu.module.css"
 import { ReactComponent as DeleteIcon } from "../../../../../lib/icons/deleteIcon.svg"
-import { deleteUserMessageService } from "../../../../../services/messageServices"
+import { deleteUserMessageService } from "../../../../../services/messageServices.js"
 import { ReactComponent as CloseIcon } from "../../../../../lib/icons/closeIcon.svg"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { SocketContext } from "../../../../../Contexts/SocketContext.js"
 
-const DeleteMessageMenu = ({ messageId }) => {
+const DeleteMessageMenu = ({ messageId, chatId }) => {
 
     const [isMenuShown, setIsMenuShown] = useState(false)
     const [notification, setNotification] = useState("")
+    const { socket } = useContext(SocketContext)
 
     const handleDeleteMessageClick = async (messageId) => {
         const result = await deleteUserMessageService(messageId)
         if (result.success) {
             setIsMenuShown(false)
+            socket.emit("messageDelete", { messageId, chatId })
         } else {
             setNotification(result.message)
         }

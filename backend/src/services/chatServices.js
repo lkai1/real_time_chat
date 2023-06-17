@@ -6,6 +6,7 @@ export const createPrivateChatService = async (user, participant) => {
         isGroup: false
     })
     await chat.addChatParticipants([user, participant])
+    return chat.id
 }
 
 export const createGroupChatService = async (user, chatName) => {
@@ -14,6 +15,7 @@ export const createGroupChatService = async (user, chatName) => {
         chatName,
     })
     await chat.addChatParticipants([user])
+    return chat.id
 }
 
 export const getPrivateChatBetweenUsersService = async (userId, userId2) => {
@@ -68,6 +70,16 @@ export const getChatFromIdService = async (chatId) => {
     return await db.chats.findOne({ where: { id: chatId } })
 }
 
+export const getChatWithParticipantIdsFromIdService = async (chatId) => {
+    return await db.chats.findOne({
+        where: { id: chatId },
+        include: {
+            model: db.chatParticipants,
+            attributes: ["userId"]
+        },
+    })
+}
+
 export const getGroupChatNameExistsService = async (chatName) => {
     return await db.chats.findOne({ where: { chatName, isGroup: true } }) ? true : false
 }
@@ -79,6 +91,12 @@ export const getUserIsChatCreatorService = async (userId, chatId) => {
             creatorId: userId
         }
     }) ? true : false
+}
+
+export const getChatsCreatedByUser = async (userId) => {
+    return await db.chats.findAll({
+        where: { creatorId: userId }
+    })
 }
 
 export const addGroupChatParticipantService = async (chat, participant) => {
