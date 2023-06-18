@@ -109,12 +109,19 @@ export const initChat = (socket, io) => {
 
     socket.on("chatParticipantRemove", async ({ chatId, participantId }) => {
         try {
+            const user = await getUserFromJWTService(socket.handshake.auth.token)
             const chatParticipant = await getUserFromIdService(participantId)
             const chat = await getChatFromIdService(chatId)
 
-            if (!chat || !chatParticipant) {
+            if (!user || !chat || !chatParticipant) {
                 socket.emit("error")
                 return
+            }
+
+            if (participantId !== user.id) {
+                const sockets = await io.fetchSockets()
+                const participantSocket = sockets.find((userSocket) => { return userSocket.userId === chatParticipant.id })
+                if (participantSocket && participantSocket.selectedChat !== chat.id) participantSocket.emit("chatParticipantRemove", { userId: chatParticipant.id, chatId: chat.id })
             }
 
             socket.nsp.in(chatId).emit("chatParticipantRemove", { userId: chatParticipant.id, chatId: chat.id })

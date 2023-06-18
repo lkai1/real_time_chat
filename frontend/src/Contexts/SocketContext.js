@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { SelectedChatContext } from "./SelectedChatContext.js";
 import { getAuthToken } from "../utils/authToken.js";
 import { io } from "socket.io-client"
+import { UserInfoContext } from "./UserInfoContext.js";
 
 export const SocketContext = createContext()
 const socket = io("/", { autoConnect: false })
@@ -11,6 +12,7 @@ const SocketProvider = ({ children }) => {
     const [onlineUserIds, setOnlineUserIds] = useState([])
     const [updateChatList, setUpdateChatList] = useState(false)
     const { selectedChatState, setSelectedChatState, deleteSelectedChatParticipant, addSelectedChatParticipant, emptySelectedChatState } = useContext(SelectedChatContext)
+    const { userInfoState } = useContext(UserInfoContext)
 
     useEffect(() => {
         socket.auth = { token: getAuthToken() }
@@ -59,7 +61,9 @@ const SocketProvider = ({ children }) => {
         })
 
         socket.on("chatParticipantRemove", ({ userId, chatId }) => {
-            if (selectedChatState.id === chatId) {
+            if (userId === userInfoState.id) {
+                socket.emit("emptySelectedChat")
+            } else if (selectedChatState.id === chatId) {
                 setSelectedChatState(prevState => {
                     return { ...prevState, messages: [...prevState.messages.filter((message) => { return message.messageCreator.id !== userId })] }
                 })
@@ -94,12 +98,13 @@ const SocketProvider = ({ children }) => {
             socket.off("messageDeleteAll")
             socket.off("userDelete")
             socket.off("chatParticipantDelete")
+            socket.off("chatParticipantRemove")
             socket.off("chatParticipantAdd")
             socket.off("chatCreate")
             socket.off("emptySelectedChat")
             socket.off("chatDelete")
         }
-    }, [addSelectedChatParticipant, deleteSelectedChatParticipant, emptySelectedChatState, selectedChatState, setSelectedChatState, updateChatList])
+    }, [addSelectedChatParticipant, deleteSelectedChatParticipant, emptySelectedChatState, selectedChatState, setSelectedChatState, updateChatList, userInfoState.id])
 
 
 
