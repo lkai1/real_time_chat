@@ -1,6 +1,24 @@
-import { validateCreatePrivateChatParams, validateCreateGroupChatParams, validateAddGroupChatParticipantParams } from "../utils/validation/chatValidation.js"
-import { createPrivateChatService, createGroupChatService, getPrivateChatBetweenUsersService, getUserChatsService, getGroupChatNameExistsService, getChatFromIdService, getUserIsChatParticipantService, getUserIsChatCreatorService, addGroupChatParticipantService, deleteChatService } from "../services/chatServices.js"
-import { getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
+import {
+    validateCreatePrivateChatParams,
+    validateCreateGroupChatParams,
+    validateAddGroupChatParticipantParams,
+    validateRemoveChatParticipantParams,
+    validateDeleteChatParams
+} from "../utils/validation/chatValidation.js"
+import {
+    createPrivateChatService,
+    createGroupChatService,
+    getPrivateChatBetweenUsersService,
+    getUserChatsService,
+    getGroupChatNameExistsService,
+    getChatFromIdService,
+    getUserIsChatParticipantService,
+    getUserIsChatCreatorService,
+    addGroupChatParticipantService,
+    deleteChatService,
+    removeChatParticipantService
+} from "../services/chatServices.js"
+import { getUserFromIdService, getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
 
 export const createPrivateChatController = async (request, response) => {
     try {
@@ -90,6 +108,36 @@ export const addGroupChatParticipantController = async (request, response) => {
     }
 }
 
+export const removeChatParticipantController = async (request, response) => {
+    try {
+
+        if (!validateRemoveChatParticipantParams(request.body)) return response.status(400).send("Invalid parameters!")
+
+        const { chatId, participantId } = request.body
+        const token = request.headers.authorization
+
+        const user = await getUserFromJWTService(token)
+        const chat = await getChatFromIdService(chatId)
+        const participant = await getUserFromIdService(participantId)
+
+        if (!user || !participant) return response.status(404).send("User or chat not found.")
+
+        if (user.id === participant.id && user.id === chat.creatorId) {
+            return response.status(403).send("As a chat creator you can't leave chat, you have to delete chat.")
+        }
+
+        if (user.id !== participant.id && user.id !== chat.creatorId) {
+            return response.status(401).send("Only chat creator can remove chat participants.")
+        }
+
+        await removeChatParticipantService(chat.id, participant.id)
+        response.status(200).json({ chatId: chat.id, participantId: participant.id })
+
+    } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
 export const getUserChatsController = async (request, response) => {
     try {
 
@@ -108,6 +156,9 @@ export const getUserChatsController = async (request, response) => {
 
 export const deleteChatController = async (request, response) => {
     try {
+
+        if (!validateDeleteChatParams(request.body)) return response.status(400).send("Invalid parameters!")
+
         const token = request.headers.authorization
         const { chatId } = request.body
 

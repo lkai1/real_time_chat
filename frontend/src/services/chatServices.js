@@ -1,6 +1,6 @@
 import axios from "axios"
 import { getAuthToken } from "../utils/authToken.js"
-import { validateChatId, validateChatName, validateUsername } from "../utils/validation/chatValidation.js"
+import { validateChatId, validateChatName, validateChatParticipantId, validateUsername } from "../utils/validation/chatValidation.js"
 
 export const getUserChatsService = async () => {
 
@@ -110,6 +110,45 @@ export const addGroupChatParticipantService = async (chatId, participantUsername
         result.message = "Et voi lisätä käyttäjää tähän keskusteluun!"
     } else if (response.status === 404) {
         result.message = "Käyttäjiä tai chattia ei löytynyt. Onko joku näistä poistettu? Kokeile päivittää sivu."
+    } else {
+        result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
+    }
+
+    return result
+}
+
+export const removeChatParticipantService = async (chatId, participantId) => {
+    const result = { success: false, message: "", data: {} }
+
+    if (!validateChatParticipantId(participantId)) {
+        result.message = "Käyttäjän tunniste on epämuodostunut!"
+        return result
+    }
+
+    if (!validateChatId(chatId)) {
+        result.message = "Keskustelun tunniste on epämuodostunut!"
+        return result
+    }
+
+    const response = await axios.delete("/api/chat/participant", {
+        headers: {
+            Authorization: getAuthToken()
+        },
+        data: {
+            chatId,
+            participantId
+        }
+    }).catch((e) => { return e.response })
+
+    if (response.status === 200) {
+        result.success = true
+        result.data = response.data
+    } else if (response.status === 403) {
+        result.message = "Keskustelun luojana voit poistua vain poistamalla keskustelun."
+    } else if (response.status === 401) {
+        result.message = "Vain keskustelun luoja voi poistaa muita käyttäjiä keskustelusta."
+    } else if (response.status === 404) {
+        result.message = "Käyttäjää tai chattia ei löytynyt. Onko joku näistä poistettu? Kokeile päivittää sivu."
     } else {
         result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
     }

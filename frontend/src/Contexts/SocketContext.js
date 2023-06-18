@@ -58,6 +58,15 @@ const SocketProvider = ({ children }) => {
             deleteSelectedChatParticipant(userId)
         })
 
+        socket.on("chatParticipantRemove", ({ userId, chatId }) => {
+            if (selectedChatState.id === chatId) {
+                setSelectedChatState(prevState => {
+                    return { ...prevState, messages: [...prevState.messages.filter((message) => { return message.messageCreator.id !== userId })] }
+                })
+                deleteSelectedChatParticipant(userId)
+            }
+        })
+
         socket.on("chatParticipantAdd", (participant) => {
             addSelectedChatParticipant(participant.chatParticipant)
         })

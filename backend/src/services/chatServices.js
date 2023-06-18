@@ -103,6 +103,11 @@ export const addGroupChatParticipantService = async (chat, participant) => {
     await chat.addChatParticipants([participant])
 }
 
+export const removeChatParticipantService = async (chatId, userId) => {
+    await db.chatParticipants.destroy({ where: { chatId, userId } })
+    await db.messages.destroy({ where: { chatId, creatorId: userId } })
+}
+
 export const deleteChatService = async (chat) => {
     await db.messages.destroy({ where: { chatId: chat.id } })
     await db.chatParticipants.destroy({ where: { chatId: chat.id } })

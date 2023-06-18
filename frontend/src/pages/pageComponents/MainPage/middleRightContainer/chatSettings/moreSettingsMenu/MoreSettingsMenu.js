@@ -5,6 +5,7 @@ import DeleteChatMenu from "./DeleteChatMenu.js"
 import { SelectedChatContext } from "../../../../../../Contexts/SelectedChatContext.js"
 import { UserInfoContext } from "../../../../../../Contexts/UserInfoContext.js"
 import DeleteUserMessagesMenu from "./DeleteUserMessagesMenu.js"
+import LeaveChatMenu from "./LeaveChatMenu.js"
 
 const MoreSettingsMenu = () => {
 
@@ -14,6 +15,7 @@ const MoreSettingsMenu = () => {
     const { userInfoState } = useContext(UserInfoContext)
 
     const showDeleteChatMenu = selectedChatState.creatorId === userInfoState.id
+    const showLeaveChatMenu = userInfoState.id !== selectedChatState.creatorId
 
     return (
         <div>
@@ -28,6 +30,7 @@ const MoreSettingsMenu = () => {
                 <div className={styles.contentContainer}>
                     <DeleteUserMessagesMenu />
                     {showDeleteChatMenu && <DeleteChatMenu />}
+                    {showLeaveChatMenu && <LeaveChatMenu />}
                 </div>
             </div>
         </div>

@@ -69,6 +69,12 @@ export const initChat = (socket, io) => {
         }
     })
 
+    socket.on("emptySelectedChat", () => {
+        socket.leave(socket.selectedChat)
+        socket.selectedChat = ""
+        socket.emit("emptySelectedChat")
+    })
+
     socket.on("chatParticipantAdd", async ({ chatId, participantId }) => {
         try {
             const chatParticipant = await getUserFromIdService(participantId)
@@ -96,6 +102,22 @@ export const initChat = (socket, io) => {
                 await emitOnlineUsersInUserChats(userSocket, io)
             })
 
+        } catch (e) {
+            socket.emit("error")
+        }
+    })
+
+    socket.on("chatParticipantRemove", async ({ chatId, participantId }) => {
+        try {
+            const chatParticipant = await getUserFromIdService(participantId)
+            const chat = await getChatFromIdService(chatId)
+
+            if (!chat || !chatParticipant) {
+                socket.emit("error")
+                return
+            }
+
+            socket.nsp.in(chatId).emit("chatParticipantRemove", { userId: chatParticipant.id, chatId: chat.id })
         } catch (e) {
             socket.emit("error")
         }
