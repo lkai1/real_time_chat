@@ -1,6 +1,6 @@
 import db from "../database/db.js"
 import jwt from "jsonwebtoken"
-import { deleteChatService, getChatsCreatedByUser } from "./chatServices.js"
+import { deleteChatService, getChatsCreatedByUserService } from "./chatServices.js"
 
 export const getUserFromJWTService = async (token) => {
     const decodedJWT = jwt.decode(token)
@@ -25,7 +25,7 @@ export const getUsernameExistsService = async (username) => {
 
 export const deleteUserService = async (userId) => {
     await db.messages.destroy({ where: { creatorId: userId } })
-    const chatsCreatedByUser = await getChatsCreatedByUser(userId)
+    const chatsCreatedByUser = await getChatsCreatedByUserService(userId)
 
     for (const chat of chatsCreatedByUser) {
         await deleteChatService(chat)

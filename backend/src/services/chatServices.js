@@ -93,7 +93,7 @@ export const getUserIsChatCreatorService = async (userId, chatId) => {
     }) ? true : false
 }
 
-export const getChatsCreatedByUser = async (userId) => {
+export const getChatsCreatedByUserService = async (userId) => {
     return await db.chats.findAll({
         where: { creatorId: userId }
     })
