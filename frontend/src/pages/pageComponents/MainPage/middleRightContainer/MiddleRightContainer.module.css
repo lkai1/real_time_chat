@@ -1,5 +1,5 @@
 .mainContainer {
-    width: 100%;
+    max-width: calc(100% - 410px);
     margin-left: 10px;
 }
 

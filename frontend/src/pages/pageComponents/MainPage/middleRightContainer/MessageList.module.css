@@ -97,6 +97,8 @@
     width: fit-content;
     color: white;
     font-family: "Quicksand";
+    word-wrap: break-word;
+    max-width: calc(100% - 15px);
     padding: 8px;
     margin: 5px 0px 10px 0px;
     border-radius: 10px;
@@ -109,6 +111,8 @@
     width: fit-content;
     color: rgb(50, 50, 50);
     font-family: "Quicksand";
+    word-wrap: break-word;
+    max-width: calc(100% - 15px);
     padding: 8px;
     margin: 5px 0px 10px 0px;
     border-radius: 10px;
