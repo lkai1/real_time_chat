@@ -17,7 +17,6 @@
     margin-top: 30px;
     width: 400px;
     border-radius: 20px;
-    box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -96,12 +95,7 @@
     font-weight: bold;
     border: none;
     border-radius: 12px;
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
     cursor: pointer;
-}
-
-.submitButton:active {
-    box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.02);
 }
 
 .submitButton:hover {
@@ -140,7 +134,6 @@
         height: fit-content;
         width: 360px;
         border-radius: 20px;
-        box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.15);
         padding-bottom: 31px;
     }
 
@@ -184,11 +177,6 @@
         padding: 14px;
         font-size: 14px;
         border-radius: 12px;
-        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.10);
-    }
-
-    .submitButton:active {
-        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.02);
     }
 
     .toRegisterButton {
@@ -213,7 +201,6 @@
         height: fit-content;
         width: 300px;
         border-radius: 20px;
-        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
         padding-bottom: 26px;
     }
 
@@ -249,11 +236,6 @@
         padding: 10px;
         font-size: 12px;
         border-radius: 12px;
-        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.10);
-    }
-
-    .submitButton:active {
-        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.02);
     }
 
     .toRegistrationButton {
@@ -278,7 +260,6 @@
         height: fit-content;
         width: 240px;
         border-radius: 20px;
-        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.15);
         padding-bottom: 21px;
     }
 
@@ -314,11 +295,6 @@
         padding: 8px;
         font-size: 10px;
         border-radius: 12px;
-        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.10);
-    }
-
-    .submitButton:active {
-        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.02);
     }
 
     .toRegistrationButton {
