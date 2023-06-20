@@ -3,7 +3,7 @@ export const validateUsername = (username) => {
     return (
         username
         && typeof username === "string"
-        && username.match(/^[0-9a-zA-Z]{3,30}$/)
+        && username.match(/^[0-9a-zA-Z]{3,20}$/)
     ) ? true : false
 }
 
