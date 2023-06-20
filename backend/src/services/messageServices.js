@@ -16,7 +16,8 @@ export const getMessagesFromChatService = async (chat) => {
             model: db.users,
             as: "messageCreator",
             attributes: ["id", "username"]
-        }
+        },
+        order: [['timestamp', 'ASC']]
     })
 }
 
