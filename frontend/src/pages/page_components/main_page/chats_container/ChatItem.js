@@ -10,7 +10,7 @@ const ChatItem = ({ chat, isFirst, isLast }) => {
 
     const { userInfoState, userInfoLoading } = useContext(UserInfoContext)
     const { updateSelectedChatState } = useContext(SelectedChatContext)
-    const { socket } = useContext(SocketContext)
+    const { socket, onlineUserIds } = useContext(SocketContext)
 
     const getChatTitle = (chat, userInfoState, userInfoLoading) => {
         if (userInfoLoading) return ""
@@ -24,6 +24,10 @@ const ChatItem = ({ chat, isFirst, isLast }) => {
     const chatType = chat.isGroup ? "Ryhmä" : "Yksityinen"
     const chatIcon = chat.isGroup ? <GroupIcon fill={"white"} /> : <UserIcon fill={"white"} />
 
+    const chatHasOtherOnlineUsers = chat.chatParticipants.find((participant) => {
+        return userInfoState.id !== participant.id && onlineUserIds.includes(participant.id)
+    })
+
     return (
         <div className={styles.mainContainer}
             onClick={() => {
@@ -35,6 +39,8 @@ const ChatItem = ({ chat, isFirst, isLast }) => {
         >
             <div className={styles.chatIconContainer}>
                 {chatIcon}
+                <div className={styles.onlineStatusCircle}
+                    user-online={chatHasOtherOnlineUsers ? "true" : "false"}></div>
             </div>
             <div className={styles.typeAndTitleTextContainer}>
                 <p className={styles.typeText}>
