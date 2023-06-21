@@ -3,10 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: rgb(30, 30, 30);
-    background: linear-gradient(330deg, rgba(40, 40, 40, 1) 66%, rgba(60, 60, 60, 1) 100%);
+    background-color: rgb(30, 30, 30);
     height: 50px;
     padding: 20px;
+    border-bottom: 2px solid rgb(230, 230, 230);
 }
 
 .logoContainer {
