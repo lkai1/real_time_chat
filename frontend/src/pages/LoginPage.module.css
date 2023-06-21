@@ -16,13 +16,14 @@
     margin-left: calc(50% - 200px);
     margin-top: 30px;
     width: 400px;
-    border-radius: 20px;
+    border-radius: 5px;
     overflow: hidden;
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: white;
     padding-bottom: 35px;
+    border: 1px solid rgb(230, 230, 230);
 }
 
 .form {
@@ -37,7 +38,8 @@
 
 .headerContainer {
     width: 100%;
-    background-color: rgb(42, 42, 42);
+    background: rgb(30, 30, 30);
+    background: linear-gradient(330deg, rgba(40, 40, 40, 1) 66%, rgba(60, 60, 60, 1) 100%);
     padding: 14px;
 }
 
@@ -74,7 +76,7 @@
     font-size: 16px;
     font-family: 'Quicksand';
     border-radius: 12px;
-    border: 1px solid rgb(215, 215, 215);
+    border: 1px solid rgb(230, 230, 230);
     outline: none;
     height: 22px;
     margin-top: 35px;
@@ -133,7 +135,7 @@
         margin-top: 27px;
         height: fit-content;
         width: 360px;
-        border-radius: 20px;
+        border-radius: 5px;
         padding-bottom: 31px;
     }
 
@@ -200,7 +202,7 @@
         margin-top: 22.5px;
         height: fit-content;
         width: 300px;
-        border-radius: 20px;
+        border-radius: 5px;
         padding-bottom: 26px;
     }
 
@@ -258,8 +260,8 @@
         margin-left: calc(50% - 120px);
         margin-top: 18px;
         height: fit-content;
+        border-radius: 5px;
         width: 240px;
-        border-radius: 20px;
         padding-bottom: 21px;
     }
 

@@ -5,9 +5,9 @@ import MainPage from "../pages/MainPage.js"
 import UserSettingsPage from "../pages/UserSettingsPage.js"
 import AuthRoute from "./AuthRoute.js"
 import NoAuthRoute from "./NoAuthRoute.js"
-import UserInfoProvider from "../Contexts/UserInfoContext.js"
-import SelectedChatProvider from "../Contexts/SelectedChatContext.js"
-import SocketProvider from "../Contexts/SocketContext.js"
+import UserInfoProvider from "../contexts/UserInfoContext.js"
+import SelectedChatProvider from "../contexts/SelectedChatContext.js"
+import SocketProvider from "../contexts/SocketContext.js"
 
 
 const Router = () => {

@@ -1,0 +1,55 @@
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(30, 30, 30);
+    background: linear-gradient(330deg, rgba(40, 40, 40, 1) 66%, rgba(60, 60, 60, 1) 100%);
+    height: 50px;
+    padding: 20px;
+}
+
+.logoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoText {
+    margin: 0px;
+    font-family: "Quicksand";
+    font-weight: bold;
+    font-size: 38px;
+    color: rgb(245, 245, 245);
+}
+
+@media only screen and (max-width: 650px) {
+    .logoText {
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .logoText {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .logoText {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .logoText {
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .logoText {
+        font-size: 20px;
+    }
+}

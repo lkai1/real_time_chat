@@ -1,53 +1,17 @@
 .mainContainer {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-}
-
-.navigateToMainPageButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    padding: 15px 30px 15px 30px;
-    background-color: white;
-}
-
-.navigateToMainPageButtonText {
-    margin: 0;
-    margin-left: 10px;
-    font-family: "Quicksand";
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.openDeleteUserMenuButtonContainer {
-    width: 100%;
-    height: calc(100% - 62px);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 10px;
+    width: 50px;
 }
 
 .openMenuButton {
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     border: none;
-    background-color: rgb(255, 50, 50);
+    background-color: white;
     cursor: pointer;
     border-radius: 10px;
-    padding: 5px 30px 5px 30px;
-}
-
-.openMenuButton:hover {
-    background-color: rgb(193, 36, 36);
 }
 
 .openMenuButtonText {
@@ -56,7 +20,6 @@
     font-weight: bold;
     margin: 0;
     padding: 0;
-    color: white;
 }
 
 .openMenuButtonIcon {
@@ -78,6 +41,10 @@
     align-items: center;
 }
 
+.openMenuButton:hover {
+    background-color: rgb(245, 245, 245);
+}
+
 .menuContainer {
     position: fixed;
     height: 100%;
@@ -94,17 +61,16 @@
 
 .contentContainer {
     position: absolute;
+    height: fit-content;
     padding-bottom: 30px;
-    height: 140px;
     width: 300px;
-    top: calc(50% - 70px);
+    top: calc(50% - 100px);
     left: calc(50% - 150px);
     background-color: white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
 }
 
 .topContainer {

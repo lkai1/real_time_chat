@@ -8,5 +8,5 @@ export const getTimestampStringFromISODateTime = (dateTime) => {
     const days = date.getDate().toString().length < 2 ? `0${date.getDate()}` : date.getDate()
     const months = `${date.getMonth() + 1}`.length < 2 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1)
 
-    return `${hours}:${minutes} ${days}.${months}.${date.getFullYear()}`
+    return `${days}.${months}.${date.getFullYear()} ${hours}:${minutes} `
 }

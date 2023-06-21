@@ -6,7 +6,7 @@ import { ReactComponent as DeleteIcon } from "../lib/icons/deleteIcon.svg"
 import { ReactComponent as CloseIcon } from "../lib/icons/closeIcon.svg"
 import { logoutService } from "../services/authServices.js"
 import { ReactComponent as ArrowLeftIcon } from "../lib/icons/arrowLeftIcon.svg"
-import { SocketContext } from "../Contexts/SocketContext.js"
+import { SocketContext } from "../contexts/SocketContext.js"
 import { getUserChatsService } from "../services/chatServices.js"
 
 const UserSettingsPage = () => {
