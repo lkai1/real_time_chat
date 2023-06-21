@@ -21,9 +21,16 @@ const ParticipantItem = ({ userId, username, onlineUserIds }) => {
                         <div className={styles.onlineStatusCircle}
                             user-online={onlineUserIds.find(id => id === userId) ? "true" : "false"}></div>
                     </div>
-                    <p className={styles.username}>
-                        {username}
-                    </p>
+                    <div>
+                        {userId === selectedChatState.creatorId &&
+                            <p className={styles.creatorText}>
+                                Keskustelun luoja
+                            </p>
+                        }
+                        <p className={styles.username}>
+                            {username}
+                        </p>
+                    </div>
                 </div>
                 {showRemoveParticipantMenu && <RemoveParticipantMenu participantId={userId} chatId={selectedChatState.id} />}
             </div>

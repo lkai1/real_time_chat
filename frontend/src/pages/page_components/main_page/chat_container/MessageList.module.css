@@ -1,5 +1,5 @@
 .mainContainer {
-    height: calc(100% - 125px);
+    height: calc(100% - 175px);
     width: 100%;
 }
 
@@ -19,7 +19,7 @@
     font-size: 16px;
     border-radius: 10px;
     font-weight: bold;
-    border: 1px solid rgb(230, 230, 230);
+    border: 2px solid rgb(230, 230, 230);
 }
 
 .messageListContainer {
@@ -78,7 +78,7 @@
 .userUsernameText {
     font-family: "Quicksand";
     font-size: 20px;
-    color: rgb(60, 60, 60);
+    color: rgb(80, 80, 80);
     margin: 0;
     margin-left: 10px;
     font-weight: bold;
@@ -122,7 +122,7 @@
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
-    border: 1px solid rgb(230, 230, 230);
+    border: 2px solid rgb(230, 230, 230);
 }
 
 @media only screen and (max-width: 400px) {

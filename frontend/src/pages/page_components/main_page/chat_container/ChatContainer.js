@@ -5,11 +5,13 @@ import { useContext, useState } from "react"
 import { createMessageService } from "../../../../services/messageServices.js"
 import ChatSettings from "./ChatSettings.js"
 import { SocketContext } from "../../../../contexts/SocketContext.js"
+import { UserInfoContext } from "../../../../contexts/UserInfoContext.js"
 
 const ChatContainer = () => {
 
     const [message, setMessage] = useState("")
     const { selectedChatState } = useContext(SelectedChatContext)
+    const { userInfoState } = useContext(UserInfoContext)
     const { socket } = useContext(SocketContext)
     const [notification, setNotification] = useState("")
 
@@ -25,9 +27,21 @@ const ChatContainer = () => {
         setMessage("")
     }
 
+    const chatIsGroup = selectedChatState.isGroup
+    const chatTitle = chatIsGroup ? selectedChatState.chatName
+        : selectedChatState.chatParticipants.find(((participant) => { return participant.id !== userInfoState.id }))?.username
+
     return (
         <div className={styles.mainContainer}>
             <ChatSettings />
+            <div className={styles.chatInfoContainer}>
+                <p className={styles.chatTypeText}>
+                    {chatIsGroup ? "Ryhmä" : "Yksityinen"}
+                </p>
+                <p className={styles.chatTitleText}>
+                    {chatTitle}
+                </p>
+            </div>
             <MessageList />
             <p className={notification ? styles.notificationShown : styles.notification}>{notification}</p>
             {selectedChatState.id &&

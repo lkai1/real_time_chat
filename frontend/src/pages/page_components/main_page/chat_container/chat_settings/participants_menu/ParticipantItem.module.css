@@ -53,6 +53,14 @@
     bottom: -3px;
 }
 
+.creatorText {
+    margin: 0;
+    font-family: "Quicksand";
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(180, 180, 180);
+}
+
 .username {
     display: inline-block;
     font-family: "Quicksand";

@@ -23,7 +23,7 @@
     flex-direction: column;
     background-color: white;
     padding-bottom: 35px;
-    border: 1px solid rgb(230, 230, 230);
+    border: 2px solid rgb(230, 230, 230);
 }
 
 .form {
@@ -76,14 +76,14 @@
     font-size: 16px;
     font-family: 'Quicksand';
     border-radius: 12px;
-    border: 1px solid rgb(230, 230, 230);
+    border: 2px solid rgb(230, 230, 230);
     outline: none;
     height: 22px;
     margin-top: 35px;
 }
 
 .inputField:hover {
-    border: 1px solid rgb(175, 175, 175);
+    border: 2px solid rgb(175, 175, 175);
 }
 
 .submitButton {

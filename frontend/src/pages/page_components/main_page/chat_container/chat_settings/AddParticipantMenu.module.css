@@ -17,7 +17,7 @@
     border-radius: 100px;
     background-color: white;
     cursor: pointer;
-    border: 1px solid rgb(230, 230, 230);
+    border: 2px solid rgb(230, 230, 230);
 }
 
 .openMenuButton:hover {
@@ -117,14 +117,14 @@
     font-size: 16px;
     font-family: 'Quicksand';
     border-radius: 12px;
-    border: 1px solid rgb(215, 215, 215);
+    border: 2px solid rgb(215, 215, 215);
     outline: none;
     height: 22px;
     margin-top: 30px;
 }
 
 .inputField:hover {
-    border: 1px solid rgb(175, 175, 175);
+    border: 2px solid rgb(175, 175, 175);
 }
 
 .addButton {
