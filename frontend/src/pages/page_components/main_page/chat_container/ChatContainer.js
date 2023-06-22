@@ -36,7 +36,7 @@ const ChatContainer = () => {
             <ChatSettings />
             <div className={styles.chatInfoContainer}>
                 <p className={styles.chatTypeText}>
-                    {chatIsGroup ? "Ryhmä" : "Yksityinen"}
+                    {chatIsGroup ? "Ryhmä:" : "Yksityinen:"}
                 </p>
                 <p className={styles.chatTitleText}>
                     {chatTitle}

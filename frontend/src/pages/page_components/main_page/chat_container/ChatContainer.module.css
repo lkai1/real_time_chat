@@ -7,14 +7,12 @@
 
 .chatInfoContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     margin-left: 0;
     margin-top: 0;
     width: fit-content;
-    margin-left: 15px;
     padding-bottom: 5px;
-    border-bottom: 2px solid rgb(56, 119, 255);
 }
 
 .chatTypeText {
@@ -28,9 +26,10 @@
 .chatTitleText {
     margin: 0;
     font-family: "Quicksand";
-    font-size: 20px;
+    font-size: 13px;
     font-weight: bold;
     color: rgb(30, 30, 30);
+    margin-left: 5px;
 }
 
 .createMessageFormContentContainer {

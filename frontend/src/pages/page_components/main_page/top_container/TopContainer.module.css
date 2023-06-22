@@ -4,9 +4,10 @@
     justify-content: space-between;
     align-items: center;
     background-color: rgb(30, 30, 30);
-    height: 50px;
-    padding: 20px;
-    border-bottom: 2px solid rgb(230, 230, 230);
+    height: 90px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0px 0px 5px 3px rgb(200, 200, 200);
 }
 
 .logoContainer {
@@ -16,40 +17,86 @@
     align-items: center;
 }
 
-.logoText {
-    margin: 0px;
-    font-family: "Quicksand";
-    font-weight: bold;
-    font-size: 38px;
-    color: rgb(245, 245, 245);
+.logoImg {
+    height: 60px;
+}
+
+@media only screen and (max-width: 700px) {
+    .mainContainer {
+        height: 80px;
+    }
+
+    .logoImg {
+        height: 55px;
+    }
 }
 
 @media only screen and (max-width: 650px) {
-    .logoText {
-        font-size: 32px;
+    .mainContainer {
+        height: 70px;
+    }
+
+    .logoImg {
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .mainContainer {
+        height: 70px;
+    }
+
+    .logoImg {
+        height: 38px;
     }
 }
 
 @media only screen and (max-width: 500px) {
-    .logoText {
-        font-size: 30px;
+    .mainContainer {
+        height: 65px;
+    }
+
+    .logoImg {
+        height: 36px;
     }
 }
 
 @media only screen and (max-width: 450px) {
-    .logoText {
-        font-size: 24px;
+    .mainContainer {
+        height: 60px;
+    }
+
+    .logoImg {
+        height: 34px;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .mainContainer {
+        height: 55px;
+    }
+
+    .logoImg {
+        height: 30px;
     }
 }
 
 @media only screen and (max-width: 350px) {
-    .logoText {
-        font-size: 22px;
+    .mainContainer {
+        height: 50px;
+    }
+
+    .logoImg {
+        height: 28px;
     }
 }
 
 @media only screen and (max-width: 320px) {
-    .logoText {
-        font-size: 20px;
+    .mainContainer {
+        height: 45px;
+    }
+
+    .logoImg {
+        height: 25px;
     }
 }

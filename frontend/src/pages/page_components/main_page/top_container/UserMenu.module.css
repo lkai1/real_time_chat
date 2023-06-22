@@ -14,6 +14,9 @@
     margin-right: 10px;
     color: rgb(245, 245, 245);
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .openMenuButton {
@@ -27,6 +30,7 @@
     overflow: hidden;
     cursor: pointer;
     border: 0;
+    border: 2px solid rgb(130, 130, 130);
 }
 
 .openMenuButton:hover {
@@ -38,8 +42,8 @@
     background-color: rgb(255, 255, 255);
     border: 2px solid rgb(215, 215, 215);
     border-top: none;
-    top: 90px;
     padding: 15px;
+    top: 90px;
     border-radius: 0px 0px 10px 10px;
     height: fit-content;
     width: 200px;
@@ -95,18 +99,51 @@
     background-color: rgb(0, 138, 230);
 }
 
+@media only screen and (max-width: 700px) {
+    .username {
+        font-size: 25px;
+        max-width: 260px;
+    }
+
+    .openMenuButton {
+        height: 45px;
+        width: 45px;
+    }
+
+    .menu {
+        top: 80px;
+    }
+}
+
 @media only screen and (max-width: 650px) {
     .username {
         font-size: 22px;
         max-width: 220px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .openMenuButton {
         height: 43px;
         width: 43px;
+    }
+
+    .menu {
+        top: 70px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .username {
+        font-size: 20px;
+        max-width: 200px;
+    }
+
+    .openMenuButton {
+        height: 43px;
+        width: 43px;
+    }
+
+    .menu {
+        top: 70px;
     }
 }
 
@@ -114,9 +151,6 @@
     .username {
         font-size: 20px;
         max-width: 180px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .openMenuButton {
@@ -126,6 +160,7 @@
 
     .menu {
         right: calc(50% - 116px);
+        top: 65px;
     }
 }
 
@@ -133,9 +168,6 @@
     .username {
         font-size: 16px;
         max-width: 120px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .openMenuButton {
@@ -145,6 +177,24 @@
 
     .menu {
         right: calc(50% - 116px);
+        top: 60px;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .username {
+        font-size: 16px;
+        max-width: 105px;
+    }
+
+    .openMenuButton {
+        height: 34px;
+        width: 34px;
+    }
+
+    .menu {
+        right: calc(50% - 116px);
+        top: 55px;
     }
 }
 
@@ -152,9 +202,6 @@
     .username {
         font-size: 14px;
         max-width: 95px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .openMenuButton {
@@ -164,6 +211,7 @@
 
     .menu {
         right: calc(50% - 116px);
+        top: 50px;
     }
 }
 
@@ -171,9 +219,6 @@
     .username {
         font-size: 14px;
         max-width: 70px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .openMenuButton {
@@ -183,5 +228,6 @@
 
     .menu {
         right: calc(50% - 116px);
+        top: 45px;
     }
 }

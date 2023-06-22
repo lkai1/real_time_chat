@@ -2,6 +2,7 @@ import { useState } from "react"
 import { loginService } from "../services/authServices.js"
 import { useNavigate } from "react-router-dom"
 import styles from "./LoginPage.module.css"
+import logo from "../lib/images/flierchat_logo.png"
 
 const LoginPage = () => {
 
@@ -20,9 +21,11 @@ const LoginPage = () => {
 
     return (
         <div className={styles.mainContainer}>
-            <p className={styles.logo}>
-                FLIERCHAT
-            </p>
+            <img
+                src={logo}
+                alt="img"
+                className={styles.logoImg}
+            />
             <div className={styles.loginContainer}>
                 <form
                     className={styles.form}
