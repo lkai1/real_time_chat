@@ -36,7 +36,13 @@ const RegisterPage = () => {
                                 REKISTERÖITYMINEN
                             </p>
                         </div>
-                        <p className={styles.notification}>{notification}</p>
+                        <p className={styles.guideTextTop}>
+                            Käyttäjänimi: 3-20 kirjainta tai numeroa.
+                        </p>
+                        <p className={styles.guideTextTop}>
+                            {"Salasana: 8-30 merkkiä. Ainakin 1 iso ja pieni kirjain, 1 numero ja 1 erikoismerkki (@$!%*?&)."}
+                        </p>
+                        <p className={notification ? styles.notification : styles.notificationHidden}>{notification}</p>
                         <div className={styles.inputsContainer}>
                             <input
                                 placeholder="Käyttäjänimi"
@@ -72,7 +78,7 @@ const RegisterPage = () => {
                                 }}
                             />
                         </div>
-                        <p className={styles.guideText}>
+                        <p className={styles.guideTextBottom}>
                             Salasanaa ei voi palauttaa, joten ota se talteen!
                         </p>
                         <input
