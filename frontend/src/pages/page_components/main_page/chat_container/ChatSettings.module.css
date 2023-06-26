@@ -1,5 +1,5 @@
 .mainContainer {
-    height: 40px;
+    height: 45px;
     width: 100%;
     padding-bottom: 10px;
 }
@@ -12,8 +12,8 @@
 }
 
 .toChatListButton {
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
     display: flex;
     flex-direction: row;
     justify-content: center;

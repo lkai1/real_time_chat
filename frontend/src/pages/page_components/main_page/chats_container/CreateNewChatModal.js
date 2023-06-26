@@ -28,6 +28,13 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
         setNotification({ value: result.message, color: result.success ? 1 : 2 })
     }
 
+    const emptyChatCreationValues = () => {
+        setSelectedChatType(0)
+        setNotification({ value: "", color: 1 })
+        setGroupChatName("")
+        setPrivateChatParticipantUsername("")
+    }
+
     return (
         <div className={isShown ? styles.mainContainer : styles.hiddenMainContainer}>
             <div className={styles.contentContainer}>
@@ -35,7 +42,10 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                     <p className={styles.topTitle}>Luo uusi keskustelu</p>
                     <button className={styles.closeButton}
                         type="button"
-                        onClick={() => { setIsShown(false) }}
+                        onClick={() => {
+                            setIsShown(false)
+                            emptyChatCreationValues()
+                        }}
                     >
                         <CloseIcon fill={"rgb(70,70,70)"} />
                     </button>
@@ -45,12 +55,14 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                     <button className={styles.chatTypeSelectionButton}
                         type="button"
                         onClick={() => { setSelectedChatType(1) }}
+                        is-selected={selectedChatType === 1 ? "true" : "false"}
                     >
                         Yksityinen
                     </button>
                     <button className={styles.chatTypeSelectionButton}
                         type="button"
                         onClick={() => { setSelectedChatType(2) }}
+                        is-selected={selectedChatType === 2 ? "true" : "false"}
                     >
                         Ryhmä
                     </button>

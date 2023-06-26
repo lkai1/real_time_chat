@@ -9,6 +9,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid rgb(230, 230, 230);
 }
 
 .userInfoContainer {

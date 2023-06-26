@@ -28,7 +28,7 @@ const ChatsContainer = () => {
             {!chats[0] && !loading ?
                 <div className={styles.noChatsContainer}>
                     <p className={styles.noChatsText}>
-                        Sinulle ei ole keskusteluja
+                        Sinulla ei ole keskusteluja
                     </p>
                 </div>
                 :
