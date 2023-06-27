@@ -4,7 +4,19 @@ import { getChatMessagesService } from "../services/messageServices.js";
 export const SelectedChatContext = createContext({})
 
 const SelectedChatProvider = ({ children }) => {
-    const [selectedChatState, setSelectedChatState] = useState({})
+
+    const emptyChat = useMemo(() => {
+        return {
+            id: "",
+            chatName: "",
+            chatParticipants: [],
+            creatorId: "",
+            isGroup: null,
+            messages: []
+        }
+    }, [])
+
+    const [selectedChatState, setSelectedChatState] = useState(emptyChat)
 
     const valuesToProvide = useMemo(
         () => ({
@@ -29,10 +41,10 @@ const SelectedChatProvider = ({ children }) => {
                 })
             },
             emptySelectedChatState: () => {
-                setSelectedChatState({})
+                setSelectedChatState(emptyChat)
             }
         }),
-        [selectedChatState]
+        [emptyChat, selectedChatState]
     )
 
     return (
