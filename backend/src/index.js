@@ -7,10 +7,13 @@ import messageRouter from "./routers/messageRouter.js"
 import chatRouter from "./routers/chatRouter.js"
 import { createServer } from "http"
 import { initSocket } from "./socket/socket.js"
+import path from "path"
+import { fileURLToPath } from "url"
 
 const app = express()
 const httpServer = createServer(app)
-
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 app.use((request, response, next) => {
     express.json()(request, response, error => {
@@ -26,6 +29,15 @@ app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/message", messageRouter)
 app.use("/api/chat", chatRouter)
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, '../build')))
+    app.get('/*', function (req, res, next) {
+        if (!req.path.includes('api'))
+            res.sendFile(path.join(__dirname, '../build', 'index.html'));
+        else next();
+    });
+}
 
 const startApp = async () => {
     await seeder()

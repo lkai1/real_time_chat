@@ -11,7 +11,7 @@ const NoAuthRoute = ({ children }) => {
             const response = await verifyLoginService()
             setVerifiedLogin(response)
         }
-        return () => { getAuthToken() ? getData() : setVerifiedLogin(false) }
+        getData()
     }, [])
 
     if (verifiedLogin === null) return <div></div>
