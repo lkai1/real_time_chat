@@ -16,8 +16,8 @@ export const initChat = (socket, io) => {
 
             if (userIsChatParticipant) {
                 socket.leave(socket.selectedChat)
-                socket.selectedChat = chatId
                 socket.join(chatId)
+                socket.selectedChat = chatId
             } else {
                 socket.emit("error")
             }
@@ -70,9 +70,13 @@ export const initChat = (socket, io) => {
     })
 
     socket.on("emptySelectedChat", () => {
-        socket.leave(socket.selectedChat)
-        socket.selectedChat = ""
-        socket.emit("emptySelectedChat")
+        try {
+            socket.leave(socket.selectedChat)
+            socket.selectedChat = ""
+            socket.emit("emptySelectedChat")
+        } catch (e) {
+            socket.emit("error")
+        }
     })
 
     socket.on("chatParticipantAdd", async ({ chatId, participantId }) => {
@@ -94,8 +98,10 @@ export const initChat = (socket, io) => {
                 return userSocket.userId === participantId
             })
 
-            participantSocket.emit("chatCreate")
-            await emitOnlineUsersInUserChats(participantSocket, io)
+            if (participantSocket) {
+                participantSocket.emit("chatCreate")
+                await emitOnlineUsersInUserChats(participantSocket, io)
+            }
 
             onlineSocketsInChat.forEach(async (userSocket) => {
                 userSocket.emit("chatParticipantAdd", { chatParticipant })

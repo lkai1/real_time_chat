@@ -22,6 +22,7 @@ const AddParticipantMenu = () => {
         const result = await addGroupChatParticipantService(chatId, username)
         if (result.success) socket.emit("chatParticipantAdd", { chatId, participantId: result.data })
         setNotification({ value: result.message, color: result.success ? 1 : 2 })
+        setToAddUsername("")
     }
 
     return (
@@ -45,23 +46,25 @@ const AddParticipantMenu = () => {
                         </button>
                     </div>
                     <p className={notification.color === 1 ? styles.notificationText : styles.notificationErrorText}>{notification.value}</p>
-                    <div className={styles.inputFieldAndAddButtonContainer}>
+                    <form
+                        className={styles.addUserForm}
+                        onSubmit={(event) => {
+                            event.preventDefault()
+                            handleAddUserClick(selectedChatState.id, toAddUsername, setNotification)
+                        }}
+                    >
                         <input
                             className={styles.inputField}
                             value={toAddUsername}
                             placeholder="Käyttäjän nimi..."
                             onChange={(event) => { setToAddUsername(event.target.value) }}
                         />
-                        <button
-                            type="button"
+                        <input
+                            type="submit"
                             className={styles.addButton}
-                            onClick={() => {
-                                handleAddUserClick(selectedChatState.id, toAddUsername, setNotification)
-                            }}
-                        >
-                            Lisää käyttäjä keskusteluun
-                        </button>
-                    </div>
+                            value={"Lisää käyttäjä keskusteluun"}
+                        />
+                    </form>
                 </div>
             </div>
         </div>

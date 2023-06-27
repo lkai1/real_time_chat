@@ -68,42 +68,44 @@ const CreateNewChatModal = ({ isShown, setIsShown }) => {
                     </button>
                 </div>
                 {selectedChatType === 1 ?
-                    <div className={styles.inputFieldAndCreateButtonContainer}>
+                    <form className={styles.createChatForm}
+                        onSubmit={(event) => {
+                            event.preventDefault()
+                            handleCreatePrivateChatClick(privateChatParticipantUsername, setNotification)
+                        }}
+                    >
                         <input
                             className={styles.inputField}
                             value={privateChatParticipantUsername}
                             placeholder="Käyttäjän nimi..."
                             onChange={(event) => { setPrivateChatParticipantUsername(event.target.value) }}
                         />
-                        <button
-                            type="button"
+                        <input
+                            type="submit"
                             className={styles.createButton}
-                            onClick={() => {
-                                handleCreatePrivateChatClick(privateChatParticipantUsername, setNotification)
-                            }}
-                        >
-                            Luo yksityinen keskustelu
-                        </button>
-                    </div>
+                            value={"Luo yksityinen keskustelu"}
+                        />
+                    </form>
                     :
                     selectedChatType === 2 ?
-                        <div className={styles.inputFieldAndCreateButtonContainer}>
+                        <form className={styles.createChatForm}
+                            onSubmit={(event) => {
+                                event.preventDefault()
+                                handleCreateGroupChatClick(groupChatName, setNotification)
+                            }}
+                        >
                             <input
                                 className={styles.inputField}
                                 value={groupChatName}
                                 placeholder="Ryhmän nimi..."
                                 onChange={(event) => { setGroupChatName(event.target.value) }}
                             />
-                            <button
-                                type="button"
+                            <input
+                                type="submit"
                                 className={styles.createButton}
-                                onClick={() => {
-                                    handleCreateGroupChatClick(groupChatName, setNotification)
-                                }}
-                            >
-                                Luo ryhmä keskustelu
-                            </button>
-                        </div>
+                                value={"Luo ryhmä keskustelu"}
+                            />
+                        </form>
                         :
                         <></>
                 }
