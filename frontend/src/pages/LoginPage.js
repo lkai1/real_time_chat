@@ -21,6 +21,7 @@ const LoginPage = () => {
 
     return (
         <div className={styles.mainContainer}>
+            <p className={styles.warningText}>Tämä sovellus on kehitys- ja testausvaiheessa.</p>
             <img
                 src={logo}
                 alt="img"
