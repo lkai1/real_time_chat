@@ -1,5 +1,3 @@
-<h1>Linkki sovellukseen:</h1>
+<h1>Linkki sovellukseen: https://flierchat.com</h1>
 <br/>
-[FLIERCHAT](https://flierchat.com)
-<br/>
-<hi>Voit laittaa minulle viestiä nimimerkille: Kai</hi>
+<h3>Voit laittaa minulle viestiä nimimerkille: Kai</h3>
