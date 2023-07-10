@@ -106,6 +106,10 @@ const SocketProvider = ({ children }) => {
         }
     }, [addSelectedChatParticipant, deleteSelectedChatParticipant, emptySelectedChatState, selectedChatState, setSelectedChatState, updateChatList, userInfoState.id])
 
+    useEffect(() => {
+        socket.emit("onlineUsers")
+    }, [])
+
     const valuesToProvide = { onlineUserIds, socket, updateChatList }
 
     return (
