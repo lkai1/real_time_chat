@@ -64,7 +64,7 @@ export const registerService = async (registerCreds) => {
 
 export const verifyLoginService = async () => {
 
-    const response = await axios.get("api/auth/verify_login", {
+    const response = await axios.get("/api/auth/verify_login", {
         headers: {
             Authorization: getAuthToken()
         }
