@@ -66,6 +66,44 @@ export const getUserIsChatParticipantService = async (userId, chatId) => {
     }) ? true : false
 }
 
+export const getChatParticipantService = async (userId, chatId) => {
+    return await db.chatParticipants.findOne({
+        where: {
+            userId,
+            chatId
+        }
+    })
+}
+
+export const getUnreadMessagesAmountInChatService = async (chatId, lastOpened) => {
+
+    if (!lastOpened) return 0
+
+    const unreadMessagesAmount = await db.messages.count({
+        where: {
+            chatId,
+            timestamp: {
+                [Op.gt]: lastOpened
+            }
+        }
+    })
+
+    return unreadMessagesAmount ? unreadMessagesAmount : 0
+}
+
+export const getChatLastOpenedByUserService = async (chatId, userId) => {
+    const chatParticipant = await db.chatParticipants.findOne({
+        where: { chatId, userId },
+        attributes: ["lastOpened"]
+    })
+    return chatParticipant.lastOpened
+}
+
+export const updateChatLastOpenedByUserService = async (userId, chatId) => {
+    const chatParticipant = await getChatParticipantService(userId, chatId)
+    await chatParticipant.update({ lastOpened: new Date().toISOString() })
+}
+
 export const getChatFromIdService = async (chatId) => {
     return await db.chats.findOne({ where: { id: chatId } })
 }

@@ -6,6 +6,7 @@ import { createMessageService } from "../../../../services/messageServices.js"
 import ChatSettings from "./ChatSettings.js"
 import { SocketContext } from "../../../../contexts/SocketContext.js"
 import { UserInfoContext } from "../../../../contexts/UserInfoContext.js"
+import { updateUnreadMessagesAmountInChatService } from "../../../../services/chatServices.js"
 
 const ChatContainer = () => {
 
@@ -32,7 +33,11 @@ const ChatContainer = () => {
         : selectedChatState.chatParticipants.find(((participant) => { return participant.id !== userInfoState.id }))?.username
 
     return (
-        <div className={styles.mainContainer}>
+        <div className={styles.mainContainer}
+            onClick={async () => {
+                await updateUnreadMessagesAmountInChatService(selectedChatState.id)
+            }}
+        >
             <ChatSettings />
             <div className={styles.chatInfoContainer}>
                 <p className={styles.chatTypeText}>

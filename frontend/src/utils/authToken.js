@@ -5,7 +5,10 @@ export const getAuthToken = () => {
 }
 
 export const setAuthToken = (token) => {
-    document.cookie = `auth-token=${token};`
+    const date = new Date()
+    date.setDate(date.getDate() + 7)
+    const expiresIn = date.toUTCString()
+    document.cookie = `auth-token=${token}; expires=${expiresIn}`
 }
 
 export const clearAuthToken = () => {

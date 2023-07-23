@@ -33,9 +33,9 @@ app.use("/api/chat", chatRouter)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, '../build')))
     app.get('/*', function (req, res, next) {
-        if (!req.path.includes('api'))
-            res.sendFile(path.join(__dirname, '../build', 'index.html'));
-        else next();
+        if (!req.path.includes('api')) {
+            res.sendFile(path.join(__dirname, '../build', 'index.html'))
+        } else next()
     });
 }
 

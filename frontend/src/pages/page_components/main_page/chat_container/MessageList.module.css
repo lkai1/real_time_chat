@@ -125,6 +125,23 @@
     border: 2px solid rgb(230, 230, 230);
 }
 
+.messageText>span>a {
+    color: rgb(255, 255, 255);
+}
+
+.userMessageText>span>a {
+    color: rgb(90, 90, 90);
+}
+
+.newMessagesInfoText {
+    font-family: "Quicksand";
+    margin: 0;
+    text-align: center;
+    color: rgb(80, 80, 80);
+    font-size: 14px;
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 400px) {
     .usernameText {
         max-width: 150px;

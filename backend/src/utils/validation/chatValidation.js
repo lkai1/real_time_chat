@@ -52,3 +52,23 @@ export const validateDeleteChatParams = (params) => {
         && params.chatId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)
     ) ? true : false
 }
+
+export const validateGetUnreadMessagesInChatParams = (params) => {
+    return (
+        params
+        && typeof params === "object"
+        && Object.keys(params).length === 1
+        && typeof params.chatId === "string"
+        && params.chatId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)
+    ) ? true : false
+}
+
+export const validateUpdateUnreadMessagesInChatParams = (params) => {
+    return (
+        params
+        && typeof params === "object"
+        && Object.keys(params).length === 1
+        && typeof params.chatId === "string"
+        && params.chatId.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i)
+    ) ? true : false
+}

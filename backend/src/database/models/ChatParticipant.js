@@ -8,6 +8,10 @@ const ChatParticipant = (sequelize) => {
             unique: true,
             primaryKey: true
         },
+        lastOpened: {
+            type: DataTypes.STRING,
+            allowNull: true
+        }
     }, { timestamps: false })
 }
 

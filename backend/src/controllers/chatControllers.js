@@ -3,7 +3,9 @@ import {
     validateCreateGroupChatParams,
     validateAddGroupChatParticipantParams,
     validateRemoveChatParticipantParams,
-    validateDeleteChatParams
+    validateDeleteChatParams,
+    validateGetUnreadMessagesInChatParams,
+    validateUpdateUnreadMessagesInChatParams
 } from "../utils/validation/chatValidation.js"
 import {
     createPrivateChatService,
@@ -16,7 +18,10 @@ import {
     getUserIsChatCreatorService,
     addGroupChatParticipantService,
     deleteChatService,
-    removeChatParticipantService
+    removeChatParticipantService,
+    getChatLastOpenedByUserService,
+    getUnreadMessagesAmountInChatService,
+    updateChatLastOpenedByUserService
 } from "../services/chatServices.js"
 import { getUserFromIdService, getUserFromJWTService, getUserFromUsernameService } from "../services/userServices.js"
 
@@ -43,6 +48,9 @@ export const createPrivateChatController = async (request, response) => {
 
         const chatId = await createPrivateChatService(user, participant)
 
+        await updateChatLastOpenedByUserService(user.id, chatId)
+        await updateChatLastOpenedByUserService(participant.id, chatId)
+
         response.status(201).json(chatId)
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
@@ -65,6 +73,8 @@ export const createGroupChatController = async (request, response) => {
         if (chatNameExists) return response.status(403).send("Group chat name is already taken.")
 
         const chatId = await createGroupChatService(user, chatName)
+
+        await updateChatLastOpenedByUserService(user.id, chatId)
 
         response.status(201).json(chatId)
     } catch (_error) {
@@ -100,6 +110,8 @@ export const addGroupChatParticipantController = async (request, response) => {
         if (participantIsChatParticipant) return response.status(403).send("User is already chat participant.")
 
         await addGroupChatParticipantService(chat, participant)
+
+        await updateChatLastOpenedByUserService(user.id, chat.id)
 
         response.status(201).json(participant.id)
 
@@ -172,6 +184,56 @@ export const deleteChatController = async (request, response) => {
         await deleteChatService(chat)
 
         response.status(200).send("Chat deleted.")
+    } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const getUnreadMessagesInChatController = async (request, response) => {
+    try {
+
+        if (!validateGetUnreadMessagesInChatParams(request.query)) return response.status(400).send("Invalid parameters!")
+
+        const token = request.headers.authorization
+        const { chatId } = request.query
+        const user = await getUserFromJWTService(token)
+        const chat = await getChatFromIdService(chatId)
+
+        if (!chat || !user) return response.status(404).send("Chat or user not found!")
+
+        const userIsChatParticipant = await getUserIsChatParticipantService(user.id, chat.id)
+
+        if (!userIsChatParticipant) return response.status(403).send("User is not chat participant!")
+
+        const lastOpened = await getChatLastOpenedByUserService(chatId, user.id)
+        const unreadMessagesAmount = await getUnreadMessagesAmountInChatService(chatId, lastOpened)
+        
+        response.status(200).json(unreadMessagesAmount)
+
+    } catch (_error) {
+        response.status(500).send("Something went wrong! Try again later.")
+    }
+}
+
+export const updateUnreadMessagesInChatController = async (request, response) => {
+    try {
+
+        if (!validateUpdateUnreadMessagesInChatParams(request.body)) return response.status(400).send("Invalid parameters!")
+
+        const token = request.headers.authorization
+        const { chatId } = request.body
+        const user = await getUserFromJWTService(token)
+        const chat = await getChatFromIdService(chatId)
+
+        if (!chat || !user) return response.status(404).send("Chat or user not found!")
+
+        const userIsChatParticipant = await getUserIsChatParticipantService(user.id, chat.id)
+
+        if (!userIsChatParticipant) return response.status(403).send("User is not chat participant!")
+
+        await updateChatLastOpenedByUserService(user.id, chat.id)
+        response.status(200).send("Unread messages updated.")
+
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
     }

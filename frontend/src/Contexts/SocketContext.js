@@ -3,6 +3,7 @@ import { SelectedChatContext } from "./SelectedChatContext.js";
 import { getAuthToken } from "../utils/authToken.js";
 import { io } from "socket.io-client"
 import { UserInfoContext } from "./UserInfoContext.js";
+import { setTabInfoNewMessages } from "../utils/tabInfo.js";
 
 export const SocketContext = createContext()
 const socket = io("/", { autoConnect: false })
@@ -33,6 +34,7 @@ const SocketProvider = ({ children }) => {
         })
 
         socket.on("message", ({ message }) => {
+            if (message.messageCreator.id !== userInfoState.id) setTabInfoNewMessages()
             setSelectedChatState(prevState => {
                 return { ...prevState, messages: [...prevState.messages, message] }
             })

@@ -6,7 +6,7 @@ import { ReactComponent as UserIcon } from "../../../../lib/icons/userIcon.svg"
 import { SelectedChatContext } from "../../../../contexts/SelectedChatContext.js"
 import { SocketContext } from "../../../../contexts/SocketContext.js"
 
-const ChatItem = ({ chat, isFirst, isLast }) => {
+const ChatItem = ({ chat, unreadMessagesAmount, isFirst, isLast }) => {
 
     const { userInfoState, userInfoLoading } = useContext(UserInfoContext)
     const { updateSelectedChatState } = useContext(SelectedChatContext)
@@ -41,6 +41,13 @@ const ChatItem = ({ chat, isFirst, isLast }) => {
                 {chatIcon}
                 <div className={styles.onlineStatusCircle}
                     user-online={chatHasOtherOnlineUsers ? "true" : "false"}></div>
+                {unreadMessagesAmount ?
+                    <div className={styles.unreadMessagesAmountContainer}>
+                        <p className={styles.unreadMessagesAmountText}>{unreadMessagesAmount > 9 ? ">9" : unreadMessagesAmount}</p>
+                    </div>
+                    :
+                    <></>
+                }
             </div>
             <div className={styles.typeAndTitleTextContainer}>
                 <p className={styles.typeText}>

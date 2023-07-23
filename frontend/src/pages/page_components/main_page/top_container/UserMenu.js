@@ -20,7 +20,7 @@ const UserMenu = () => {
                 type="button"
                 onClick={() => { setIsShown(!isShown) }}
             >
-                <UserIcon fill={"white"} />
+                <UserIcon fill={"rgb(0, 138, 230)"} />
             </button>
             <div className={isShown ? styles.menu : styles.menuHidden}>
                 <button className={styles.navigateToUserSettingsButton}

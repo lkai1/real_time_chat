@@ -189,3 +189,61 @@ export const deleteChatService = async (chatId) => {
 
 }
 
+export const getUnreadMessagesAmountInChatService = async (chatId) => {
+    const result = { success: false, message: "", data: {} }
+
+    if (!validateChatId(chatId)) {
+        result.message = "Chatin tunniste on epämuodostunut!"
+        return result
+    }
+
+    const response = await axios.get("/api/chat/unread_messages", {
+        headers: {
+            Authorization: getAuthToken()
+        },
+        params: {
+            chatId
+        }
+    }).catch((e) => { return e.response })
+
+    if (response.status === 200) {
+        result.success = true
+        result.data = response.data
+    } else {
+        result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
+    }
+
+    return result
+}
+
+export const updateUnreadMessagesAmountInChatService = async (chatId) => {
+    const result = { success: false, message: "" }
+
+    if (!validateChatId(chatId)) {
+        result.message = "Chatin tunniste on epämuodostunut!"
+        return result
+    }
+
+    const response = await axios.patch("/api/chat/unread_messages",
+        {
+            chatId
+        },
+        {
+            headers: {
+                Authorization: getAuthToken()
+            }
+        }
+    ).catch((e) => { return e.response })
+
+    if (response.status === 200) {
+        result.success = true
+    } else if (response.status === 403) {
+        result.message = "Et ole chatin osallistuja. Kokeile päivittää sivu"
+    } else if (response.status === 404) {
+        result.message = "Käyttäjää tai chattia ei löytynyt. Onko joku näistä poistettu? Kokeile päivittää sivu."
+    } else {
+        result.message = "Jokin meni pieleen! Yritä myöhemmin uudelleen."
+    }
+
+    return result
+}

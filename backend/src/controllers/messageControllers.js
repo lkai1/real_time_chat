@@ -71,7 +71,7 @@ export const deleteAllUserMessagesFromChatController = async (request, response)
 
         await deleteAllUserMessagesFromChatService(chat.id, user.id)
 
-        return response.status(200).send("All user messages deleted from chat.")
+        response.status(200).send("All user messages deleted from chat.")
 
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
@@ -94,7 +94,7 @@ export const deleteUserMessageController = async (request, response) => {
 
         await deleteUserMessageService(message)
 
-        return response.status(200).send("Message deleted.")
+        response.status(200).send("Message deleted.")
 
     } catch (_error) {
         response.status(500).send("Something went wrong! Try again later.")
